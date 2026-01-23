@@ -4,7 +4,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export async function signupService(data: SignupInput) {
-  const { name, email, password } = data;
+  const { userName, email, password } = data;
 
   const existingUser = await UserModel.findOne({ email });
 
@@ -15,7 +15,7 @@ export async function signupService(data: SignupInput) {
   const hashPassword = await bcrypt.hash(password, 10);
 
   const user = UserModel.create({
-    name,
+    userName,
     email,
     password: hashPassword,
   });
@@ -49,7 +49,7 @@ export async function loginServices(data: SigninInput) {
 
   return {
     token,
-    name: existingUser.name,
+    userName: existingUser.userName,
     email,
   };
 }
