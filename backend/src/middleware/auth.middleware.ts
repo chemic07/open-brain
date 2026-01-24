@@ -43,7 +43,7 @@ export default function authMiddleware(
       return res.status(401).json({ error: "Invalid token payload" });
     }
 
-    req.user = payload.userId;
+    req.userId = payload.userId;
     req.token = token;
 
     next();
