@@ -1,4 +1,4 @@
-import { FiBarChart2 } from "react-icons/fi";
+import appLogo from "../../assets/images/logo/app_logo2.svg";
 import { NavLink } from "react-router-dom";
 import Button from "../ui/Button";
 
@@ -9,7 +9,8 @@ function NavBar() {
         <div className="flex items-center gap-2 text-white font-bold text-xl tracking-tight">
           <div className="bg-blue-600 rounded-lg p-1.5 flex items-center justify-center">
             {/* Using a custom star/spark icon style to match the image */}
-            <FiBarChart2 className="text-white rotate-180" size={20} />
+            {/* <FiBarChart2 className="text-white rotate-180" size={20} /> */}
+            <img src={appLogo} className="h-6 w-6 text-white" />
           </div>
           Open Brain
         </div>

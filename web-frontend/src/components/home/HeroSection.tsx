@@ -4,13 +4,14 @@ import Button from "../ui/Button";
 export default function HeroSection() {
   return (
     <section className="relative flex flex-col items-center justify-center min-h-[120vh] md:min-h-[130vh] w-full bg-[#020617] overflow-hidden px-4">
-      {/* grid */}
+      {/* gradient */}
       <div
         className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full 
-   bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-blue-900 to-90%
-  pointer-events-none"
+        bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-blue-900 to-90%
+        pointer-events-none"
       />
 
+      {/* grid */}
       <div className="absolute inset-0">
         <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
           <defs>
@@ -55,7 +56,7 @@ export default function HeroSection() {
         </span>
       </div>
 
-      {/* 3. Hero Content */}
+      {/* hero content*/}
       <div className="z-10 max-w-4xl text-center">
         <h1 className="text-5xl md:text-5xl font-bold tracking-tight text-white mb-6 leading-[1.1] ">
           Streamlined Project Management. <br />
@@ -67,16 +68,16 @@ export default function HeroSection() {
           teams with intuitive tools to help close deals faster.
         </p>
 
-        {/* 4. Action Buttons */}
+        {/* action button*/}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <Button
-            text="Get Started"
+            text="Add a Link"
             variant="primary"
             size="lg"
             tailIcon={<FiArrowDownRight size={18} />}
           />
           <Button
-            text="Book a Demo"
+            text="DashBoard"
             variant="glass"
             size="lg"
             headIcon={<FiPlay size={16} fill="currentColor" />}
