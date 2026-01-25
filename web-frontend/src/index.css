@@ -1,3 +1,4 @@
+@import "../src/styles/font.css";
 @import "tailwindcss";
 @theme {
   --color-blue-400: #2646bc;
@@ -10,4 +11,7 @@
   --color-black-200: #484848;
   --color-black-900: #000000;
   --color-gray-100: #3a3a3a;
+
+  --font-sans: "Satoshi", "ui-sans-serif", "system-ui";
+  --font-heading: "Satoshi", "ui-sans-serif", "system-ui";
 }

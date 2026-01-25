@@ -1,50 +1,54 @@
-import type { ReactNode } from "react";
-import clsx from "clsx";
+import { type ReactNode } from "react";
+import { clsx, type ClassValue } from "clsx";
+import { twMerge } from "tailwind-merge";
+import { FiLoader } from "react-icons/fi";
 
-type Variant = "primary" | "outline" | "danger" | "ghost";
+function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
+
+type Variant = "primary" | "outline" | "danger" | "ghost" | "glass";
 type Size = "sm" | "md" | "lg";
 
 interface IButtonProps {
   text: string;
-
   isLoading?: boolean;
   onClick?: () => void;
-
   headIcon?: ReactNode;
   tailIcon?: ReactNode;
-
   variant?: Variant;
   size?: Size;
-
   type?: "button" | "submit" | "reset";
   className?: string;
   disabled?: boolean;
 }
 
 const VARIANT_STYLES: Record<Variant, string> = {
-  primary: "bg-white hover:bg-blue-700 text-black",
-  outline: "border border-blue-600 text-blue-600 hover:bg-blue-50",
+  primary:
+    "bg-white text-slate-950 hover:bg-slate-100 shadow-lg shadow-white/5",
+
+  glass:
+    "bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20",
+
+  outline: "border border-slate-700 text-white hover:bg-white/5",
   danger: "bg-red-600 hover:bg-red-700 text-white",
-  ghost: "bg-transparent hover:bg-gray-100 text-gray-700",
+  ghost: "bg-transparent hover:bg-white/10 text-slate-300",
 };
 
 const SIZE_STYLES: Record<Size, string> = {
-  sm: "px-3 py-1.5 text-sm",
-  md: "px-5 py-2 text-base",
-  lg: "px-8 py-3 text-lg",
+  sm: "px-4 py-1.5 text-xs",
+  md: "px-6 py-2.5 text-sm",
+  lg: "px-8 py-4 text-base",
 };
 
 export default function Button({
   text: title,
   isLoading = false,
   onClick,
-
   headIcon,
   tailIcon,
-
   variant = "primary",
   size = "md",
-
   type = "button",
   className = "",
   disabled = false,
@@ -57,17 +61,23 @@ export default function Button({
       onClick={!isDisabled ? onClick : undefined}
       disabled={isDisabled}
       aria-busy={isLoading}
-      className={clsx(
-        "flex items-center justify-center gap-2 rounded-md font-medium transition",
-        "disabled:opacity-60 disabled:cursor-not-allowed",
+      className={cn(
+        "flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 active:scale-95",
+        "disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100",
         VARIANT_STYLES[variant],
         SIZE_STYLES[size],
         className,
       )}
     >
-      {!isLoading && headIcon}
-      <span>{isLoading ? "Loading..." : title}</span>
-      {!isLoading && tailIcon}
+      {isLoading ? (
+        <FiLoader className="h-4 w-4 animate-spin" />
+      ) : (
+        <>
+          {headIcon && <span className="shrink-0">{headIcon}</span>}
+          <span>{title}</span>
+          {tailIcon && <span className="shrink-0">{tailIcon}</span>}
+        </>
+      )}
     </button>
   );
 }
