@@ -3,7 +3,7 @@ import shriRamLogo from "../../assets/images/logo/shri_ram_logo.png";
 import globalLogo from "../../assets/images/logo/global_logo.png";
 import gyanGangaLogo from "../../assets/images/logo/gg_logo.png";
 
-import React, { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 const logos = [
@@ -27,71 +27,59 @@ const logos = [
     url: "https://upload.wikimedia.org/wikipedia/commons/f/f9/Salesforce.com_logo.svg",
     height: 34,
   },
-  {
-    name: "Central Academy School",
-    url: schoolLogo,
-    height: 50,
-  },
-  {
-    name: "Shri Ram College",
-    url: shriRamLogo,
-    height: 50,
-  },
-  {
-    name: "Gyan Ganga College",
-    url: gyanGangaLogo,
-    height: 80,
-  },
-  {
-    name: "Global College",
-    url: globalLogo,
-    height: 45,
-  },
+  { name: "Central Academy School", url: schoolLogo, height: 46 },
+  { name: "Shri Ram College", url: shriRamLogo, height: 46 },
+  { name: "Gyan Ganga College", url: gyanGangaLogo, height: 60 },
+  { name: "Global College", url: globalLogo, height: 44 },
 ];
 
-const duplicatedLogos = [...logos, ...logos];
+const duplicated = [...logos, ...logos];
 
-const LogoSocialProof: React.FC = () => {
+export default function LogoSocialProof() {
   const trackRef = useRef<HTMLDivElement>(null);
-  const [width, setWidth] = useState(0);
+  const [halfWidth, setHalfWidth] = useState(0);
 
   useEffect(() => {
-    if (trackRef.current) {
-      const totalWidth = trackRef.current.scrollWidth;
-      setWidth(totalWidth / 2);
-    }
+    if (!trackRef.current) return;
+
+    const updateWidth = () => {
+      setHalfWidth(trackRef.current!.scrollWidth / 2);
+    };
+
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+    return () => window.removeEventListener("resize", updateWidth);
   }, []);
 
   return (
-    <section className="py-20 overflow-hidden bg-gra ">
-      <div>
+    <section className="relative w-full overflow-hidden py-16 bg-transparent">
+      {/* Clipping Wrapper */}
+      <div className="relative w-full overflow-hidden">
         <motion.div
           ref={trackRef}
-          className="flex items-center gap-16 w-max"
-          animate={{ x: [-0, -width] }}
+          className="inline-flex items-center gap-16"
+          animate={{ x: [-0, -halfWidth] }}
           transition={{
-            x: {
-              repeat: Infinity,
-              repeatType: "loop",
-              ease: "linear",
-              duration: 30,
-            },
+            duration: 30,
+            ease: "linear",
+            repeat: Infinity,
           }}
         >
-          {duplicatedLogos.map((logo, i) => (
-            <img
-              key={i}
-              src={logo.url}
-              alt={logo.name}
-              style={{ height: `${logo.height * 2}px` }}
-              className="w-auto mr-10 opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500"
-            />
+          {duplicated.map((logo, i) => (
+            <div key={i} className="flex items-center justify-center shrink-0">
+              <img
+                src={logo.url}
+                alt={logo.name}
+                style={{ height: logo.height }}
+                className="w-auto opacity-40 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500"
+                draggable={false}
+              />
+            </div>
           ))}
         </motion.div>
       </div>
-      <hr className="my-3 border-t border-gray-100 " />
+
+      <hr className="mt-10 border-white/10" />
     </section>
   );
-};
-
-export default LogoSocialProof;
+}

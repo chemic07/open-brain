@@ -49,7 +49,7 @@ export default function AISearchDemo() {
 
               {/* more result */}
               <div className="flex items-center justify-between text-xs text-gray-400">
-                <span>3 more related results</span>
+                <span>3 more related results</span>av
                 <FiArrowRight />
               </div>
             </div>

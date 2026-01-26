@@ -2,8 +2,26 @@ import getLinkIcon from "../../assets/images/icons/get_link_icon.png";
 import AISearchLinkIcon from "../../assets/images/icons/ai_search_icon.png";
 import ShareLinkIcon from "../../assets/images/icons/share_link_icon.png";
 import WhyChooseCard from "../ui/whyChooseCard";
-import { motion } from "framer-motion";
+import { easeOut, motion, type Variants } from "framer-motion";
 export default function WhyOpenBrain() {
+  const containerVariants: Variants = {
+    hidden: {},
+    visible: {
+      transition: {
+        staggerDirection: 0.2,
+      },
+    },
+  };
+
+  const textVaritants: Variants = {
+    hidden: { opacity: 0, y: -20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.8, ease: easeOut },
+    },
+  };
+
   return (
     <section
       id="why"
@@ -20,31 +38,36 @@ export default function WhyOpenBrain() {
       />
 
       <div className="relative z-10 flex flex-col items-center w-full">
-        {/* badge */}
-        <div className="mb-8 flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-medium text-gray-300 backdrop-blur-sm transition hover:border-white/20">
-          Make your life easier
-        </div>
+        <motion.div
+          className="flex flex-col items-center"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={textVaritants}
+        >
+          {/* badge */}
+          <div className="mb-8 max-w-max items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1 text-xs font-medium text-gray-300 backdrop-blur-sm transition hover:border-white/20">
+            Make your life easier
+          </div>
 
-        {/* text */}
-        <div className="text-center max-w-2xl">
-          <h1 className="text-white text-5xl font-semibold">Why Open Brain?</h1>
-          <p className="text-gray-400 mt-5 font-medium">
-            Open Brain helps you capture, organize, and rediscover everything
-            you learn online. Save links, search with AI, and turn scattered
-            resources into structured knowledge.
-          </p>
-        </div>
+          {/* text */}
+          <div className="text-center max-w-2xl">
+            <h1 className="text-white text-5xl font-semibold">
+              Why Open Brain?
+            </h1>
+            <p className="text-gray-400 mt-5 font-medium">
+              Open Brain helps you capture, organize, and rediscover everything
+              you learn online. Save links, search with AI, and turn scattered
+              resources into structured knowledge.
+            </p>
+          </div>
+        </motion.div>
 
         <motion.div
           initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, amount: 0.5 }}
-          variants={{
-            hidden: {},
-            show: {
-              transition: { staggerChildren: 0.15 },
-            },
-          }}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={containerVariants}
           className="mt-10 flex flex-row justify-center gap-5 flex-wrap"
         >
           <WhyChooseCard
