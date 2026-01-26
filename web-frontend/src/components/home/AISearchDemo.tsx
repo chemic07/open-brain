@@ -1,3 +1,4 @@
+import { motion } from "framer-motion";
 import { FiStar, FiSearch, FiArrowRight } from "react-icons/fi";
 
 export default function AISearchDemo() {
@@ -56,7 +57,13 @@ export default function AISearchDemo() {
         </div>
 
         {/* right */}
-        <div className="flex flex-col justify-center items-start space-y-6">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="flex flex-col justify-center items-start space-y-6"
+        >
           {/* badge */}
           <div className="flex items-center gap-2 rounded-full border border-white/5 text-white bg-white/5 hover:bg-white/10 px-4 py-1.5 text-xs font-semibold backdrop-blur-sm">
             <FiStar />
@@ -82,7 +89,7 @@ export default function AISearchDemo() {
             <li>• Works across all your collections</li>
             <li>• Learns from how you organize</li>
           </ul>
-        </div>
+        </motion.div>
       </div>
     </section>
   );

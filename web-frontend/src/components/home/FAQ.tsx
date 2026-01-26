@@ -29,7 +29,10 @@ export default function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   return (
-    <section className="relative bg-[#05070A] py-24 px-6 md:px-20 overflow-hidden">
+    <section
+      id="faq"
+      className="relative bg-[#05070A] py-24 px-6 md:px-20 overflow-hidden"
+    >
       {/* glow at back*/}
       <div className="pointer-events-none absolute inset-x-0 top-20 h-64 bg-radial-[ellipse_at_center] from-blue-500/20 via-transparent to-transparent blur-3xl" />
 

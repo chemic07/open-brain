@@ -2,7 +2,10 @@ import { FiGithub, FiTwitter, FiLinkedin } from "react-icons/fi";
 
 export default function Footer() {
   return (
-    <footer className="relative bg-[#05070A] border-t border-white/10 overflow-hidden">
+    <footer
+      id="contact"
+      className="relative bg-[#05070A] border-t border-white/10 overflow-hidden"
+    >
       {/* subtle glow */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-radial-[ellipse_at_center] from-blue-500/10 via-transparent to-transparent blur-2xl" />
 

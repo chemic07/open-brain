@@ -1,13 +1,23 @@
 import { FiStar, FiSearch, FiLink, FiShare2 } from "react-icons/fi";
 import AISearchDemo from "./AISearchDemo";
+import { motion } from "framer-motion";
 
 export default function Features() {
   return (
-    <section className="bg-[#05070A] py-24 px-6 md:px-20 overflow-hidden">
+    <section
+      id="features"
+      className="bg-[#05070A] py-24 px-6 md:px-20 overflow-hidden"
+    >
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* lefts */}
 
-        <div className="flex flex-col justify-center items-start space-y-6">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.6 }}
+          transition={{ duration: 0.7, ease: "easeOut" }}
+          className="flex flex-col justify-center items-start space-y-6"
+        >
           {/* Badge */}
           <div className="flex items-center gap-2 rounded-full border border-white/10 text-gray-400 bg-white/5 px-4 py-1.5 text-xs font-semibold backdrop-blur-sm transition hover:bg-white/10">
             <FiStar />
@@ -26,7 +36,7 @@ export default function Features() {
             and revisit everything later without digging through bookmarks or
             chats.
           </p>
-        </div>
+        </motion.div>
 
         {/* Right Side: Visual Card */}
         <div className="relative group">

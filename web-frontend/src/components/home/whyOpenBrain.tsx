@@ -1,11 +1,14 @@
 import getLinkIcon from "../../assets/images/icons/get_link_icon.png";
 import AISearchLinkIcon from "../../assets/images/icons/ai_search_icon.png";
 import ShareLinkIcon from "../../assets/images/icons/share_link_icon.png";
-
-import WhyChooseCard from "./whyChooseCard";
+import WhyChooseCard from "../ui/whyChooseCard";
+import { motion } from "framer-motion";
 export default function WhyOpenBrain() {
   return (
-    <section className="relative w-full flex flex-col items-center justify-center overflow-hidden py-24 px-45">
+    <section
+      id="why"
+      className="relative w-full flex flex-col items-center justify-center overflow-hidden py-24 px-45"
+    >
       {/* radial glow */}
       <div
         className="
@@ -32,7 +35,18 @@ export default function WhyOpenBrain() {
           </p>
         </div>
 
-        <div className="mt-10 flex flex-row justify-center gap-5 flex-wrap">
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.5 }}
+          variants={{
+            hidden: {},
+            show: {
+              transition: { staggerChildren: 0.15 },
+            },
+          }}
+          className="mt-10 flex flex-row justify-center gap-5 flex-wrap"
+        >
           <WhyChooseCard
             imageSrc={getLinkIcon}
             iconSize={160}
@@ -53,7 +67,7 @@ export default function WhyOpenBrain() {
             title="Share Your Brain"
             subTitle="Create public or private collections and share your curated knowledge with friends or teams."
           />
-        </div>
+        </motion.div>
       </div>
     </section>
   );

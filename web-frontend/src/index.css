@@ -15,3 +15,7 @@
   --font-sans: "Satoshi", "ui-sans-serif", "system-ui";
   --font-heading: "Satoshi", "ui-sans-serif", "system-ui";
 }
+
+html {
+  scroll-behavior: smooth;
+}

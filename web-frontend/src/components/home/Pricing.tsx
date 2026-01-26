@@ -2,7 +2,10 @@ import PricingCard from "../ui/PricingCard";
 
 export default function Pricing() {
   return (
-    <section className="relative bg-[#05070A] py-24 px-6 md:px-20 overflow-hidden">
+    <section
+      id="pricing"
+      className="relative bg-[#05070A] py-24 px-6 md:px-20 overflow-hidden"
+    >
       <div className="relative z-10 max-w-7xl mx-auto">
         <div
           className="
