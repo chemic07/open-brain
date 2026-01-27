@@ -7,6 +7,10 @@ import DashboardRoot from "./pages/DashboardRoot";
 import DashboardOverview from "./pages/DashboardOverview";
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
+import { useAppDispatch } from "./hooks/redux";
+import { useEffect } from "react";
+import { loadUser } from "./store/features/auth";
+import { getToken } from "./utils/LocalStorage";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +37,14 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const token = getToken();
+    if (token) {
+      dispatch(loadUser());
+    }
+  }, [dispatch]);
   return <RouterProvider router={router} />;
 }
 

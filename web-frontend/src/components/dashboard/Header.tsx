@@ -1,4 +1,4 @@
-import { FiBell, FiMenu, FiSun } from "react-icons/fi";
+import { FiMenu, FiSend, FiSun } from "react-icons/fi";
 import SearachBar from "../ui/SearchBar";
 import ProfileSection from "../ui/ProfileSection";
 
@@ -34,9 +34,7 @@ export default function Header({ setIsOpen }: IHeaderProps) {
             className="p-2 text-gray-500 hover:bg-black/10 rounded-full transition-colors relative"
             aria-label="Notifications"
           >
-            <FiBell size={20} />
-            {/* dot */}
-            <span className="absolute top-2 right-2.5 w-2 h-2 bg-red-500 border-2 border-white rounded-full"></span>
+            <FiSend size={20} />
           </button>
         </div>
 

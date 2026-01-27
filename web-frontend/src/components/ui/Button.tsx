@@ -7,7 +7,13 @@ function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-type Variant = "primary" | "outline" | "danger" | "ghost" | "glass";
+type Variant =
+  | "primary"
+  | "secondary"
+  | "outline"
+  | "danger"
+  | "ghost"
+  | "glass";
 type Size = "sm" | "md" | "lg";
 
 interface IButtonProps {
@@ -27,6 +33,8 @@ const VARIANT_STYLES: Record<Variant, string> = {
   primary:
     "bg-white text-slate-950 hover:bg-slate-100 shadow-lg shadow-white/5",
 
+  secondary:
+    "flex items-center gap-2  bg-blue-600 text-white rounded-xl text-sm font-semibold hover:bg-blue-700 shadow-lg shadow-blue-100 transition-all",
   glass:
     "bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20",
 
