@@ -18,6 +18,6 @@ export default function errorHandler(
 
   return res.status(500).json({
     success: false,
-    error: "Internal Server Error",
+    error: "Internal Server Errorddfdf",
   });
 }
