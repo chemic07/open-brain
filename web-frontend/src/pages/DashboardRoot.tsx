@@ -6,7 +6,7 @@ export default function DashboardRoot() {
 
   if (loading) {
     return (
-      <div className="h-screen bg-black flex items-center justify-center text-white">
+      <div className="h-screen bg-white flex items-center justify-center text-black">
         Loading...
       </div>
     );

@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-
+import { Toaster } from "sonner";
 import HomeLayout from "./pages/HomeLayout";
 import SignInPage from "./pages/SignInPage";
 import SignUpPage from "./pages/SignUpPage";
@@ -45,7 +45,12 @@ function App() {
       dispatch(loadUser());
     }
   }, [dispatch]);
-  return <RouterProvider router={router} />;
+  return (
+    <div>
+      <Toaster position="top-center" />
+      <RouterProvider router={router} />
+    </div>
+  );
 }
 
 export default App;

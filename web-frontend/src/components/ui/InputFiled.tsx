@@ -1,75 +1,94 @@
-import type { ReactNode } from "react";
+import type { ReactNode, InputHTMLAttributes } from "react";
 
-interface InputFieldProps {
+interface InputFieldProps extends Omit<
+  InputHTMLAttributes<HTMLInputElement>,
+  "onChange"
+> {
   label?: string;
-  name?: string;
-  type?: string;
-  placeholder?: string;
-  value?: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-
   icon?: ReactNode;
-
   error?: string;
-  disabled?: boolean;
-  required?: boolean;
-
-  className?: string;
+  helperText?: string;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  containerClassName?: string;
+  inputClassName?: string;
+  variant?: "light" | "dark";
 }
 
 export default function InputField({
   label,
-  name,
-  type = "text",
-  placeholder = "",
-  value,
-  onChange,
-
   icon,
-
   error,
-  disabled = false,
+  helperText,
   required = false,
-
-  className = "",
+  disabled = false,
+  onChange,
+  containerClassName = "",
+  inputClassName = "",
+  variant = "light",
+  ...inputProps
 }: InputFieldProps) {
+  const isDark = variant === "dark";
+
   return (
-    <div className="flex flex-col gap-1 w-full">
-      {/* label */}
+    <div className={`flex flex-col gap-1 w-full ${containerClassName}`}>
+      {/* Label */}
       {label && (
-        <label className="text-sm text-white">
+        <label
+          className={`text-sm font-medium ${
+            isDark ? "text-white" : "text-gray-700"
+          }`}
+        >
           {label} {required && <span className="text-red-500">*</span>}
         </label>
       )}
 
-      {/* input */}
+      {/* Input Container */}
       <div
-        className={`flex items-center gap-2 px-3 py-2 rounded-md border-2
+        className={`flex items-center gap-2 px-3 py-2 rounded-lg border-2 transition-all
           ${
             error
-              ? "border-red-500"
-              : "border-gray-100 focus-within:border-gray-400"
+              ? "border-red-300 bg-red-50"
+              : isDark
+                ? "border-gray-700 bg-black-100 focus-within:border-gray-500"
+                : "border-gray-300 bg-white focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20"
           }
-          bg-black-100
-          ${disabled ? "opacity-60" : ""}
+          ${disabled ? "opacity-60 cursor-not-allowed" : ""}
         `}
       >
-        {icon && <span className="text-gray-100">{icon}</span>}
+        {icon && (
+          <span
+            className={`flex-shrink-0 ${
+              isDark ? "text-gray-400" : "text-gray-500"
+            }`}
+          >
+            {icon}
+          </span>
+        )}
 
         <input
-          name={name}
-          type={type}
-          placeholder={placeholder}
-          value={value}
           onChange={onChange}
           disabled={disabled}
           required={required}
-          className={`bg-black-100 outline-none text-white w-full placeholder:text-black-200 ${className}`}
+          className={`w-full outline-none bg-transparent
+            ${isDark ? "text-white placeholder:text-gray-500" : "text-gray-900 placeholder:text-gray-400"}
+            ${disabled ? "cursor-not-allowed" : ""}
+            ${inputClassName}
+          `}
+          {...inputProps}
         />
       </div>
 
-      {/* error */}
-      {error && <p className="text-xs text-red-500">{error}</p>}
+      {/* Error or Helper Text */}
+      {error && (
+        <p className="text-xs text-red-500 flex items-center gap-1">
+          <span>⚠</span> {error}
+        </p>
+      )}
+      {!error && helperText && (
+        <p className={`text-xs ${isDark ? "text-gray-400" : "text-gray-500"}`}>
+          {helperText}
+        </p>
+      )}
     </div>
   );
 }

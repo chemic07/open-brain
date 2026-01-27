@@ -1,10 +1,26 @@
 import { FiExternalLink, FiShare2, FiTrash2 } from "react-icons/fi";
 
-export default function LinkCard({ title, url, summary, tags }: any) {
+interface ILinkCardProps {
+  title: string;
+  url: string;
+  summary: string;
+  tags: string[];
+  id: string;
+  key: string;
+  type: string;
+  createdAt: string;
+}
+
+export default function LinkCard({
+  title,
+  url,
+  summary,
+  tags,
+}: ILinkCardProps) {
   return (
-    <div className="bg-white rounded-3xl border border-gray-200 p-6 hover:border-blue-300 hover:shadow-lg transition-all group flex flex-col h-full">
+    <div className="bg-white rounded-xl border border-gray-200 p-6 hover:border-blue-300 hover:shadow-lg transition-all group flex flex-col h-full">
       <div className="flex justify-between items-start mb-6">
-        <div className="w-12 h-12 bg-blue-50 rounded-2xl flex items-center justify-center border border-blue-100 group-hover:bg-blue-600 transition-colors">
+        <div className="w-10 h-10 bg-blue-50 rounded-xl flex items-center justify-center border border-blue-100 group-hover:bg-blue-600 transition-colors">
           <FiExternalLink
             className="text-blue-600 group-hover:text-white transition-colors"
             size={20}
@@ -14,7 +30,7 @@ export default function LinkCard({ title, url, summary, tags }: any) {
           <button className="p-2 text-gray-400 hover:bg-gray-50 hover:text-blue-600 rounded-xl transition-colors">
             <FiShare2 size={18} />
           </button>
-          <button className="p-2 text-gray-400 hover:bg-gray-50 hover:text-red-500 rounded-xl transition-colors">
+          <button className="p-2 text-gray-400 hover:bg-gray-50 hover:text-gray-800 rounded-xl transition-colors">
             <FiTrash2 size={18} />
           </button>
         </div>

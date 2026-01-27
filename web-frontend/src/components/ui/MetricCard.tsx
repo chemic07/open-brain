@@ -1,6 +1,6 @@
 export default function MetricCard({ label, value, previous, icon }: any) {
   return (
-    <div className="bg-white px-6 py-3 rounded-3xl border border-black/15 shadow-sm hover:shadow-md transition-shadow">
+    <div className="bg-white px-6 py-3 rounded-xl border border-black/15 shadow-sm hover:shadow-md transition-shadow">
       <div className="flex justify-between items-start mb-4">
         <span className="text-sm font-semibold text-gray-500 uppercase tracking-tight">
           {label}

@@ -38,8 +38,8 @@ const VARIANT_STYLES: Record<Variant, string> = {
   glass:
     "bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20",
 
-  outline: "border border-slate-700 text-white hover:bg-white/5",
-  danger: "bg-red-600 hover:bg-red-700 text-white",
+  outline: "border border-slate-700 text-black hover:bg-white/5",
+  danger: "bg-red-600 hover:bg-red-500 text-white",
   ghost: "bg-transparent hover:bg-white/10 text-slate-300",
 };
 

@@ -175,9 +175,7 @@ function BottomItem({
     <button
       className={`w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-xl transition-colors overflow-hidden ${color}`}
     >
-      <div className="flex items-center min-w-[20px] justify-center">
-        {icon}
-      </div>
+      <div className="flex items-center min-w-5 justify-center">{icon}</div>
       <AnimatePresence mode="wait">
         {open && (
           <motion.span

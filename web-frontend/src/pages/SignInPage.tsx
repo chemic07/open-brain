@@ -3,21 +3,18 @@ import { FaGoogle } from "react-icons/fa";
 import clsx from "clsx";
 import { Link, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
-// Logic Imports
 import AuthButton from "../components/ui/AuthButton";
 import InputField from "../components/ui/InputFiled";
 import { loginUser, clearError } from "../store/features/auth";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { showToast } from "../utils/toast";
 
 export default function SignInPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  // Get state from Redux
   const { loading, error } = useAppSelector((state) => state.auth);
 
-  /* ---------------- HANDLERS ---------------- */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -29,11 +26,16 @@ export default function SignInPage() {
 
     // If login is successful, navigate to dashboard
     if (loginUser.fulfilled.match(resultAction)) {
+      showToast({
+        type: "success",
+        message: "Welcome back!",
+        options: {
+          description: "You have successfully logged in.",
+        },
+      });
       navigate("/dashboard");
     }
   };
-
-  /* ---------------- CLEANUP ---------------- */
   useEffect(() => {
     return () => {
       dispatch(clearError());
@@ -66,7 +68,6 @@ export default function SignInPage() {
             </div>
           </div>
 
-          {/* ADDED: <form> and onSubmit logic */}
           <form
             onSubmit={handleSubmit}
             className="bg-black text-white py-10 px-15 w-1/2 flex flex-col justify-between"
@@ -82,7 +83,7 @@ export default function SignInPage() {
 
             <div className="flex flex-row gap-2">
               <AuthButton
-                type="button" // Prevent social buttons from submitting the form
+                type="button"
                 text="Google"
                 variant="authOutline"
                 width="full"
@@ -104,7 +105,6 @@ export default function SignInPage() {
             </div>
 
             <div className="flex flex-col mb-5 gap-3">
-              {/* ADDED: name props for FormData to work */}
               <InputField
                 name="email"
                 placeholder="e.g. john@email.com"
@@ -119,13 +119,10 @@ export default function SignInPage() {
                 required
               />
 
-              {/* ADDED: Dynamic Error Display */}
               {error && (
                 <p className="text-red-500 text-xs text-center mt-2">{error}</p>
               )}
             </div>
-
-            {/* UPDATED: type="submit" and loading state */}
             <AuthButton
               type="submit"
               text={loading ? "Signing in..." : "Sign In"}
