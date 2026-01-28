@@ -1,4 +1,6 @@
 import { FiExternalLink, FiShare2, FiTrash2 } from "react-icons/fi";
+import { useAppDispatch } from "../../hooks/redux";
+import { deleteContent } from "../../store/features/content";
 
 interface ILinkCardProps {
   title: string;
@@ -16,7 +18,17 @@ export default function LinkCard({
   url,
   summary,
   tags,
+  id,
 }: ILinkCardProps) {
+  const dispatch = useAppDispatch();
+
+  const handelDelete = () => {
+    try {
+      dispatch(deleteContent(id));
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div className="bg-white rounded-xl border border-gray-200 p-6 hover:border-blue-300 hover:shadow-lg transition-all group flex flex-col h-full">
       <div className="flex justify-between items-start mb-6">
@@ -30,7 +42,10 @@ export default function LinkCard({
           <button className="p-2 text-gray-400 hover:bg-gray-50 hover:text-blue-600 rounded-xl transition-colors">
             <FiShare2 size={18} />
           </button>
-          <button className="p-2 text-gray-400 hover:bg-gray-50 hover:text-gray-800 rounded-xl transition-colors">
+          <button
+            onClick={handelDelete}
+            className="p-2 text-gray-400 hover:bg-gray-50 hover:text-gray-800 rounded-xl transition-colors"
+          >
             <FiTrash2 size={18} />
           </button>
         </div>

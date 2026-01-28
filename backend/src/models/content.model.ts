@@ -8,10 +8,10 @@ export enum ContentType {
 }
 
 interface ContentDocument {
-  link: Types.ObjectId;
-  type: ContentType;
   title: string;
+  type: ContentType;
   tags: Types.ObjectId[];
+  link: Types.ObjectId;
   userId: Types.ObjectId;
 }
 

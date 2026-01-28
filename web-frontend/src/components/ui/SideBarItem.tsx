@@ -17,7 +17,7 @@ export default function SidebarItem({ item, active, setActive, open }: any) {
       <button
         onClick={() => setActive(item.id)}
         className={`relative z-10 w-full flex items-center justify-between px-3 py-2 rounded-lg
-        ${isActive ? "text-blue-700" : "text-gray-600 hover:bg-sky-100"}`}
+        ${isActive ? "text-blue-700" : "text-gray-600 hover:bg-sky-50"}`}
       >
         <div className="flex items-center gap-3">
           <Icon size={18} />

@@ -7,6 +7,7 @@ import LinkCard from "../ui/LinkCard";
 import MetricCard from "../ui/MetricCard";
 import { useState } from "react";
 import AddContentDialog from "../ui/AddContentDialog";
+import { motion } from "framer-motion";
 
 export default function DashboardContent() {
   const dispatch = useAppDispatch();
@@ -57,15 +58,15 @@ export default function DashboardContent() {
           value={contents.length.toString()}
           change="+15.5%"
           isUp={true}
-          previous="30 more from last month"
+          previous="00 more from last month"
           icon={<FiEye className="text-blue-600" />}
         />
         <MetricCard
           label="Total Shared"
-          value="45"
+          value="1"
           change="+8.4%"
           isUp={true}
-          previous="30 more from last month"
+          previous="00 more from last month"
           icon={<FiShare2 className="text-gray-600" />}
         />
         <MetricCard
@@ -73,7 +74,7 @@ export default function DashboardContent() {
           value={contents.filter((c) => c.tags.length === 0).length.toString()}
           change="-10.5%"
           isUp={false}
-          previous="30 more from last month"
+          previous="00 more from last month"
           icon={<FiTrash2 className="text-gray-600" />}
         />
       </div>
@@ -93,7 +94,7 @@ export default function DashboardContent() {
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
-                className="h-64 bg-gray-100 rounded-xl animate-pulse"
+                className="h-64 bg-black/20 rounded-xl animate-pulse"
               />
             ))}
           </div>
@@ -116,41 +117,49 @@ export default function DashboardContent() {
           </div>
         )}
 
-        {/* empty state */}
-        {!loading && !error && contents.length === 0 && (
-          <div className="text-center py-12 bg-gray-50 rounded-xl border-2 border-dashed border-gray-300">
-            <FiEye className="mx-auto text-gray-400 mb-4" size={48} />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              No links yet
-            </h3>
-            <p className="text-gray-500 mb-4">
-              Start by adding your first link to your brain!
-            </p>
-            <Button
-              headIcon={<FiPlus size={18} />}
-              text="Add Your First Link"
-              variant="primary"
-              onClick={() => setShowAddDialog(true)}
-            />
-          </div>
-        )}
-
-        {/* content grid*/}
+        {/* content grid */}
         {!loading && !error && recentLinks.length > 0 && (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+            initial="hidden"
+            animate="show"
+            variants={{
+              hidden: {},
+              show: {
+                transition: {
+                  staggerChildren: 0.08,
+                },
+              },
+            }}
+          >
             {recentLinks.map((content) => (
-              <LinkCard
+              <motion.div
                 key={content._id}
-                id={content._id}
-                title={content.title}
-                url={content.link.url}
-                summary={content.link.description || "No description available"}
-                tags={content.tags.map((tag) => tag.name)}
-                type={content.type}
-                createdAt={content.createdAt}
-              />
+                variants={{
+                  hidden: { opacity: 0, y: 20, scale: 0.98 },
+                  show: {
+                    opacity: 1,
+                    y: 0,
+                    scale: 1,
+                    transition: { duration: 0.35, ease: "easeOut" },
+                  },
+                }}
+              >
+                <LinkCard
+                  key={content._id}
+                  id={content._id}
+                  title={content.title}
+                  url={content.link.url}
+                  summary={
+                    content.link.description || "No description available"
+                  }
+                  tags={content.tags.map((tag) => tag.name)}
+                  type={content.type}
+                  createdAt={content.createdAt}
+                />
+              </motion.div>
             ))}
-          </div>
+          </motion.div>
         )}
       </div>
 

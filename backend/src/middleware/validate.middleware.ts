@@ -7,7 +7,9 @@ export const validate =
       const result = schema.safeParse(req.body);
 
       if (!result.success) {
-        return res.status(400).json({ error: result.error });
+        return res
+          .status(400)
+          .json({ error: result.error.message + "fdsfdsf" });
       }
 
       req.body = result.data;

@@ -4,12 +4,13 @@ import { AppError } from "../utils/app_error";
 import type { ContentInput } from "../validation/content.schema";
 import { findOrCreateTags } from "./tag.services";
 
+//#region  add content
 export async function addContentService(data: ContentInput, userId: string) {
   // find or create link
-  let link = await Link.findOne({ url: data.url });
+  let link = await Link.findOne({ url: data.link });
 
   if (!link) {
-    link = await Link.create({ url: data.url, title: data.title });
+    link = await Link.create({ url: data.link, title: data.title });
   }
 
   // prevent duplicate save
@@ -32,6 +33,10 @@ export async function addContentService(data: ContentInput, userId: string) {
   });
 }
 
+//#endregion
+
+//#region fetch all
+
 export async function getAllContentService(userId: string) {
   return await Content.find({ userId }).populate("tags").populate("link");
 }
@@ -45,3 +50,4 @@ export async function deleteContentService(id: string, userId: string) {
 
   return deleted;
 }
+//#endregion

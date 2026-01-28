@@ -14,6 +14,8 @@ import {
 } from "react-icons/fi";
 import appLogo from "../assets/images/logo/app_logo2.svg";
 import type { ReactNode } from "react";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
+import { logout } from "../store/features/auth";
 
 interface SideBarProps {
   isOpen: boolean;
@@ -28,6 +30,19 @@ export default function SideBar({
   active,
   setActive,
 }: SideBarProps) {
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector((state) => state.auth);
+
+  function handleLogout() {
+    try {
+      if (!loading) {
+        dispatch(logout());
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   const mobileVariants: Variants = {
     open: { x: 0, transition: { type: "spring", stiffness: 300, damping: 30 } },
     closed: {
@@ -115,6 +130,7 @@ export default function SideBar({
           label="Logout"
           open={isOpen}
           color="text-red-500 hover:bg-red-50"
+          onClick={handleLogout}
         />
       </div>
     </div>
@@ -163,9 +179,11 @@ interface BottomItemProps {
   label: string;
   open: boolean;
   color?: string;
+  onClick?: () => void;
 }
 
 function BottomItem({
+  onClick,
   icon,
   label,
   open,
@@ -173,6 +191,7 @@ function BottomItem({
 }: BottomItemProps) {
   return (
     <button
+      onClick={onClick}
       className={`w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-xl transition-colors overflow-hidden ${color}`}
     >
       <div className="flex items-center min-w-5 justify-center">{icon}</div>

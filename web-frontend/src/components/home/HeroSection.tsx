@@ -1,6 +1,7 @@
 import { FiPlay, FiArrowDownRight } from "react-icons/fi";
 import Button from "../ui/Button";
 import { motion, useScroll, useTransform } from "framer-motion";
+import dashboardImg from "../../assets/images/thumbnail/dashboard.png";
 
 export default function HeroSection() {
   const { scrollYProgress } = useScroll();
@@ -9,25 +10,27 @@ export default function HeroSection() {
   const textScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.9]);
   const textOpacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.5]);
 
-  const dashY = useTransform(scrollYProgress, [0, 0], [0, -40]);
-  const dashScale = useTransform(scrollYProgress, [0, 0.3], [0.9, 1.05]);
-  const dashOpacity = useTransform(scrollYProgress, [0, 0.5], [0.5, 1]);
+  const dashY = useTransform(scrollYProgress, [0, 0.3], [0, -40]);
+  const dashScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.2]);
+  const dashOpacity = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
 
   return (
     <section
       id="home"
-      className="relative flex flex-col items-center justify-center min-h-[120vh] md:min-h-[130vh] w-full bg-[#020617] overflow-hidden px-4"
+      className="relative isolate flex flex-col items-center justify-center min-h-[120vh] md:min-h-[130vh] w-full bg-[#020617] overflow-hidden px-4"
     >
-      {/* gradient */}
-      <div
-        className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full 
-        bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-blue-900 to-90%
-        pointer-events-none"
-      />
+      <div className="absolute inset-0 z-0 pointer-events-none">
+        {/* glow */}
+        <div
+          className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full
+          bg-radial-[at_50%_75%] from-sky-200 via-blue-400 to-blue-900 to-90%"
+        />
 
-      {/* grid */}
-      <div className="absolute inset-0">
-        <svg className="w-full h-full" xmlns="http://www.w3.org/2000/svg">
+        {/* grid */}
+        <svg
+          className="w-full h-full absolute inset-0"
+          xmlns="http://www.w3.org/2000/svg"
+        >
           <defs>
             <pattern
               id="grid"
@@ -70,7 +73,7 @@ export default function HeroSection() {
         </span>
       </div>
 
-      {/* text main*/}
+      {/* main text */}
       <motion.div
         style={{ y: textY, scale: textScale, opacity: textOpacity }}
         className="z-10 max-w-4xl text-center"
@@ -103,19 +106,22 @@ export default function HeroSection() {
         </div>
       </motion.div>
 
-      {/*dahboard */}
+      {/* dashboard */}
       <motion.div
         style={{ y: dashY, scale: dashScale, opacity: dashOpacity }}
-        className="z-10 mt-16 w-full max-w-5xl rounded-2xl border border-white/10 bg-slate-900/50 p-2 shadow-2xl shadow-blue-500/10 backdrop-blur-xl"
+        className="relative z-20 mb-10 mt-16 w-full max-w-5xl rounded-2xl border border-white/10 bg-slate-900/50 p-2 shadow-2xl shadow-blue-500/10 backdrop-blur-xl"
       >
-        <div className="aspect-video w-full rounded-xl bg-slate-950/50 border border-white/5 overflow-hidden">
-          <div className="flex h-full items-center justify-center text-gray-700 font-mono text-sm italic">
-            [Dashboard Interface Component]
-          </div>
+        <div className="w-full rounded-xl bg-slate-950/50 border border-white/5 relative">
+          <img
+            src={dashboardImg}
+            alt="Dashboard Preview"
+            className="w-full h-full rounded-2xl object-contain"
+          />
         </div>
       </motion.div>
 
-      <div className="absolute bottom-0 left-0 w-full h-80 bg-linear-to-b from-transparent via-gray-900 to-gray-950" />
+      {/* bottom fade */}
+      <div className="absolute bottom-0 left-0 w-full h-80 bg-linear-to-b from-transparent via-gray-900 to-gray-950 z-10" />
     </section>
   );
 }

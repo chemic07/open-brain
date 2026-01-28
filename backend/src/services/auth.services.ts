@@ -3,6 +3,7 @@ import type { SigninInput, SignupInput } from "../validation/auth.schema";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+//#region  signup
 export async function signupService(data: SignupInput) {
   const { userName, email, password } = data;
 
@@ -22,7 +23,8 @@ export async function signupService(data: SignupInput) {
 
   return user;
 }
-
+//#endregion
+//#region login
 export async function loginServices(data: SigninInput) {
   const { email, password } = data;
   const existingUser = await UserModel.findOne({ email }).select("+password");
@@ -53,3 +55,4 @@ export async function loginServices(data: SigninInput) {
     email,
   };
 }
+//#endregion

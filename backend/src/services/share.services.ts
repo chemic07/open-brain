@@ -3,6 +3,7 @@ import { Content } from "../models/content.model";
 import { hashString } from "../utils/random_hash";
 import { AppError } from "../utils/app_error";
 
+//#region  gen link
 export async function generateShareLinkService(userId: string) {
   // if already done get that and send it again
   let shareLink = await ShareLink.findOne({ userId });
@@ -38,6 +39,9 @@ export async function getSharedContentService(hash: string) {
   return contents;
 }
 
+//#endregion
+//#region toggle access
+
 export async function toggleShareLinkService(
   userId: string,
   isActive: boolean,
@@ -54,3 +58,5 @@ export async function toggleShareLinkService(
 
   return shareLink;
 }
+
+//#endregion

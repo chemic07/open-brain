@@ -3,6 +3,7 @@ import appLogo from "../../assets/images/logo/app_logo2.svg";
 import Button from "../ui/Button";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
+import { useAppSelector } from "../../hooks/redux";
 
 const navItems = [
   { label: "Home", href: "#home" },
@@ -15,6 +16,7 @@ const navItems = [
 function NavBar() {
   const [active, setActive] = useState<string>("home");
   const navigate = useNavigate();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-transparent">
@@ -44,8 +46,8 @@ function NavBar() {
                   href={item.href}
                   onClick={() => setActive(item.label)}
                   className={`relative z-10 px-4  rounded-full transition
-          ${active === item.label ? "text-white" : "hover:text-white"}
-        `}
+                  ${active === item.label ? "text-white" : "hover:text-white"}
+                  `}
                 >
                   {item.label}
                 </a>
@@ -57,11 +59,13 @@ function NavBar() {
         {/* go to auth*/}
         <div className="flex items-center gap-4">
           <Button
-            text="Sign Up"
+            text={isAuthenticated ? "Dashboard" : "Sign Up"}
             variant="glass"
             size="sm"
             onClick={() => {
-              navigate("/auth/signup");
+              isAuthenticated
+                ? navigate("/dashboard")
+                : navigate("/auth/signin");
             }}
             className="bg-white/5 border-white/10 hover:bg-white/10 px-6"
           />
