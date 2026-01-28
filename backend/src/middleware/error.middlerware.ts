@@ -1,6 +1,7 @@
 import type { Request, Response, NextFunction } from "express";
 import { AppError } from "../utils/app_error";
 
+// this takes control if there is any error in services
 export default function errorHandler(
   err: Error,
   req: Request,
@@ -18,6 +19,6 @@ export default function errorHandler(
 
   return res.status(500).json({
     success: false,
-    error: "Internal Server Errorddfdf",
+    error: "Internal Server Error",
   });
 }

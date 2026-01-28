@@ -1,8 +1,4 @@
-import type { Request, Response } from "express";
-import { UserModel } from "../models/user.model";
-import { Content } from "../models/content.model";
-import { Tag } from "../models/tag.model";
-import mongoose from "mongoose";
+import type { NextFunction, Request, Response } from "express";
 import {
   changePasswordServices,
   getUserStatsService,
@@ -10,7 +6,11 @@ import {
 } from "../services/user.services";
 import { deleteContentService } from "../services/content.services";
 
-export async function getUserStats(req: Request, res: Response) {
+export async function getUserStats(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const userId = req.userId;
 
@@ -22,12 +22,15 @@ export async function getUserStats(req: Request, res: Response) {
 
     return res.status(200).json(stats);
   } catch (error) {
-    console.error("getUserStats error:", error);
-    return res.status(500).json({ error: "FAILED_TO_FETCH_STATS" });
+    next(error);
   }
 }
 
-export async function updateUserProfile(req: Request, res: Response) {
+export async function updateUserProfile(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const userId = req.userId!;
     const { userName, email } = req.body;
@@ -38,14 +41,15 @@ export async function updateUserProfile(req: Request, res: Response) {
     });
     return res.status(200).json(user);
   } catch (error: any) {
-    if ((error as Error).message === "USER_NOT_FOUND") {
-      return res.status(400).json({ message: "User not found" });
-    }
-    return res.status(500).json({ error: "Failed to update profile" });
+    next(error);
   }
 }
 
-export async function changePassword(req: Request, res: Response) {
+export async function changePassword(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const { newPassword, oldPassword } = req.body;
     const userData = await changePasswordServices(
@@ -55,14 +59,15 @@ export async function changePassword(req: Request, res: Response) {
     );
     return res.status(200).json({ message: "Password changed successfully" });
   } catch (error: any) {
-    if ((error as Error).message === "OLD_PASS_WRONG") {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-    return res.status(500).json({ error: "Failed to change password" });
+    next(error);
   }
 }
 
-export async function deleteAccount(req: Request, res: Response) {
+export async function deleteAccount(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const deleted = await deleteContentService(req.userId!, req.body.password);
     if (!deleted) {
@@ -70,11 +75,6 @@ export async function deleteAccount(req: Request, res: Response) {
     }
     return res.status(200).json({ message: "Account deleted successfully" });
   } catch (error: any) {
-    if ((error as Error).message === "USER_NOT_FOUND") {
-      return res.status(400).json({ message: "User not found" });
-    } else if ((error as Error).message === "INVALID_CREDENTIALS") {
-      return res.status(400).json({ message: "Password is incorrect" });
-    }
-    return res.status(500).json({ error: "Failed to change password" });
+    next(error);
   }
 }

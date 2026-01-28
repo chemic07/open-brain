@@ -1,4 +1,5 @@
 import { UserModel } from "../models/user.model";
+import { AppError } from "../utils/app_error";
 import type { SigninInput, SignupInput } from "../validation/auth.schema";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -10,7 +11,7 @@ export async function signupService(data: SignupInput) {
   const existingUser = await UserModel.findOne({ email });
 
   if (existingUser) {
-    throw new Error("EMAIL_EXITS");
+    throw new AppError("EMAIL_EXITS", 400);
   }
 
   const hashPassword = await bcrypt.hash(password, 10);
@@ -30,17 +31,17 @@ export async function loginServices(data: SigninInput) {
   const existingUser = await UserModel.findOne({ email }).select("+password");
 
   if (!existingUser) {
-    throw new Error("INVALID_CREDENTIALS");
+    throw new AppError("INVALID_CREDENTIALS", 400);
   }
 
-  const isMatch = bcrypt.compare(password, existingUser.password);
+  const isMatch = await bcrypt.compare(password, existingUser.password);
 
   if (!isMatch) {
-    throw new Error("INVALID_CREDENTIALS");
+    throw new AppError("INVALID_CREDENTIALS", 400);
   }
 
   if (!process.env.JWT_SECRET || !process.env.JWT_EXPIRES_IN) {
-    throw new Error("JWT ENV VAR MISSING");
+    throw new AppError("JWT ENV VAR MISSING", 500);
   }
 
   const token = jwt.sign(
@@ -52,7 +53,7 @@ export async function loginServices(data: SigninInput) {
   return {
     token,
     userName: existingUser.userName,
-    email,
+    email: existingUser.email,
   };
 }
 //#endregion

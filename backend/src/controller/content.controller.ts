@@ -1,4 +1,4 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import {
   addContentService,
   deleteContentService,
@@ -6,7 +6,11 @@ import {
 } from "../services/content.services";
 import type { ContentInput } from "../validation/content.schema";
 
-export async function addContent(req: Request, res: Response) {
+export async function addContent(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const userId = req.userId!;
     const data: ContentInput = req.body;
@@ -15,12 +19,15 @@ export async function addContent(req: Request, res: Response) {
 
     return res.status(201).json(content);
   } catch (err: any) {
-    console.error(err);
-    return res.status(400).json({ error: err.message });
+    next(err);
   }
 }
 
-export async function getAllContent(req: Request, res: Response) {
+export async function getAllContent(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const userId = req.userId!;
 
@@ -28,12 +35,15 @@ export async function getAllContent(req: Request, res: Response) {
 
     return res.status(200).json(contents);
   } catch (error: any) {
-    console.error(error);
-    return res.status(500).json({ error: "Failed to fetch content" });
+    next(error);
   }
 }
 
-export async function deleteContentById(req: Request, res: Response) {
+export async function deleteContentById(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const userId = req.userId;
     const { id: contentId } = req.params;
@@ -42,7 +52,6 @@ export async function deleteContentById(req: Request, res: Response) {
 
     res.status(200).json({ message: "Content deleted" });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({ error: "Failed to fetch content" });
+    next(error);
   }
 }

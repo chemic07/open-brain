@@ -1,9 +1,9 @@
-import type { Request, Response } from "express";
+import type { NextFunction, Request, Response } from "express";
 import type { SigninInput, SignupInput } from "../validation/auth.schema";
 import { loginServices, signupService } from "../services/auth.services";
 import { UserModel } from "../models/user.model";
 
-export async function signUp(req: Request, res: Response) {
+export async function signUp(req: Request, res: Response, next: NextFunction) {
   try {
     const user: SignupInput = req.body;
 
@@ -15,15 +15,11 @@ export async function signUp(req: Request, res: Response) {
 
     return res.status(201).json({ message: "User created" });
   } catch (error: any) {
-    if ((error as Error).message === "EMAIL_EXITS") {
-      return res.status(400).json({ message: "Email already exists" });
-    }
-
-    return res.status(500).json({ error: error.message });
+    next(error);
   }
 }
 
-export async function signIn(req: Request, res: Response) {
+export async function signIn(req: Request, res: Response, next: NextFunction) {
   try {
     const user: SigninInput = req.body;
 
@@ -35,20 +31,19 @@ export async function signIn(req: Request, res: Response) {
 
     return res.status(200).json(userData);
   } catch (error) {
-    if ((error as Error).message === "INVALID_CREDENTIALS") {
-      return res.status(400).json({ message: "Invalid credentials" });
-    }
-
-    return res.status(500).json({ error: "Internal server error" });
+    next(error);
   }
 }
 
-export async function fetchUser(req: Request, res: Response) {
+export async function fetchUser(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
   try {
     const user = await UserModel.findById(req.userId);
     res.status(200).json(user);
   } catch (error: any) {
-    console.log(error.message);
-    return res.status(500).json({ error: "Internal server error" });
+    next(error);
   }
 }

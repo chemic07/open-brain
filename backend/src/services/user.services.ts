@@ -36,7 +36,7 @@ export async function changePasswordServices(
   user.password = hashedPassword;
 
   await user.save();
-
+  console.log(user);
   return user;
 }
 
