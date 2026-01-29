@@ -10,7 +10,7 @@ export async function searchContent(
 ) {
   try {
     const userId = req.userId!;
-    const { query, limit = 10 } = req.body;
+    const { query, limit = 5 } = req.body;
 
     if (!query) return res.status(400).json({ error: "Query is required" });
 
@@ -23,16 +23,23 @@ export async function searchContent(
           path: "embedding",
           queryVector: queryEmbedding,
           numCandidates: 200,
-          limit,
-          filter: {
-            userId: new Types.ObjectId(userId),
-          },
+          limit: 20,
+          filter: { userId: new Types.ObjectId(userId) },
         },
       },
       {
+        $group: {
+          _id: "$contentId", // group be parent content
+          maxScore: { $max: { $meta: "vectorSearchScore" } },
+          relevantChunk: { $first: "$text" },
+        },
+      },
+      { $sort: { maxScore: -1 } }, // resort
+      { $limit: limit }, // limit max 5 unique items
+      {
         $lookup: {
           from: "contents",
-          localField: "contentId",
+          localField: "_id",
           foreignField: "_id",
           as: "content",
         },
@@ -40,8 +47,10 @@ export async function searchContent(
       { $unwind: "$content" },
       {
         $project: {
-          similarity: { $meta: "vectorSearchScore" },
-          text: 1,
+          _id: 0,
+          contentId: "$_id",
+          similarity: "$maxScore",
+          relevantChunk: 1,
           content: 1,
         },
       },
