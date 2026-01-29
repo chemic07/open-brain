@@ -38,7 +38,7 @@ export default function Header({ setIsOpen }: IHeaderProps) {
           <FiMenu size={20} />
         </button>
 
-        <SearachBar />
+        <SearachBar variant="secondary" size="sm" text="search anything..." />
 
         {/* right side */}
         <div className="ml-auto flex items-center gap-2 md:gap-4">

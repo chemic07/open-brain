@@ -2,6 +2,7 @@ import { useState } from "react";
 import SideBar from "../components/SideBar";
 import Header from "../components/dashboard/Header";
 import DashboardContent from "../components/dashboard/DashboardContent";
+import AiSearchContent from "../components/dashboard/AiSearchContent";
 
 export default function DashboardOverview() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -20,6 +21,8 @@ export default function DashboardOverview() {
         return <PlaceholderView title="General Links" />;
       case "articles":
         return <PlaceholderView title="Saved Articles" />;
+      case "aiSearch":
+        return <AiSearchContent />;
       default:
         return <DashboardContent />;
     }
