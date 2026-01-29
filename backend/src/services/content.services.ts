@@ -46,10 +46,13 @@ export async function addContentService(data: ContentInput, userId: string) {
   };
 
   try {
+    console.log("adding a job");
     await embeddingQueue.add("embed", jobData, {
       jobId: `embed-${content._id}`,
       priority: 1,
     });
+
+    console.log("job added ");
   } catch (err) {
     console.error("Failed to queue embedding job:", err);
     // optional: mark content as failed / pending

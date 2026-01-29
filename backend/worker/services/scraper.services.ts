@@ -1,4 +1,3 @@
-// worker/services/scraper.service.ts
 import axios from "axios";
 import * as cheerio from "cheerio";
 

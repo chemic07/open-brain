@@ -1,47 +1,49 @@
-// worker/services/ai.service.ts
-import OpenAI from "openai";
+import { pipeline } from "@huggingface/transformers";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY!,
-});
+// init gemini
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
+const model = genAI.getGenerativeModel({ model: "gemini-3-flash-preview" });
 
 export class AIService {
+  private static extractor: any = null;
+
+  //local transformers embedding
   static async generateEmbedding(text: string): Promise<number[]> {
     try {
-      const response = await openai.embeddings.create({
-        model: "text-embedding-3-small",
-        input: text.slice(0, 8000),
+      if (!this.extractor) {
+        this.extractor = await pipeline(
+          "feature-extraction",
+          "Xenova/all-MiniLM-L6-v2",
+        );
+      }
+
+      const output = await this.extractor(text, {
+        pooling: "mean",
+        normalize: true,
       });
 
-      return response.data[0]!.embedding;
+      // converting the data
+      return Array.from(output.data);
     } catch (error) {
-      console.error("Error generating embedding:", error);
-      throw new Error("Failed to generate embedding");
+      console.error("embedding error:", error);
+      throw new Error("Failed to generate  embedding");
     }
   }
 
   static async generateSummary(text: string): Promise<string> {
     try {
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-          {
-            role: "system",
-            content:
-              "You are a helpful assistant that creates concise, informative summaries. Keep summaries under 150 words and focus on the main points.",
-          },
-          {
-            role: "user",
-            content: `Summarize this content:\n\n${text.slice(0, 4000)}`,
-          },
-        ],
-        max_tokens: 200,
-        temperature: 0.5,
-      });
+      const prompt = `You are a helpful assistant that creates concise, informative summaries. 
+      Keep summaries under 150 words and focus on the main points.
+      
+      Summarize this content:
+      ${text.slice(0, 8000)}`;
 
-      return response.choices[0]!.message.content || "";
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      return response.text();
     } catch (error) {
-      console.error("Error generating summary:", error);
+      console.error("Gemini err", error);
       throw new Error("Failed to generate summary");
     }
   }
