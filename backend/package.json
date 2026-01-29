@@ -15,12 +15,18 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@types/bull": "^4.10.4",
+    "axios": "^1.13.4",
     "bcrypt": "^6.0.0",
+    "bullmq": "^5.67.2",
+    "cheerio": "^1.2.0",
     "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
+    "ioredis": "^5.9.2",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.5",
+    "openai": "^6.16.0",
     "zod": "^4.3.6"
   }
 }

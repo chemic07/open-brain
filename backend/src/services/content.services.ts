@@ -1,8 +1,12 @@
-import { Content } from "../models/content.model";
+import {
+  embeddingQueue,
+  type EmbeddingJobData,
+} from "../../shared/config/queue.config";
 import { Link } from "../models/link.model";
 import { AppError } from "../utils/app_error";
 import type { ContentInput } from "../validation/content.schema";
 import { findOrCreateTags } from "./tag.services";
+import { Content } from "../models/content.model";
 
 //#region  add content
 export async function addContentService(data: ContentInput, userId: string) {
@@ -24,13 +28,34 @@ export async function addContentService(data: ContentInput, userId: string) {
   }
 
   // create content
-  return await Content.create({
+  const content = await Content.create({
     link: link._id,
     userId,
     type: data.type,
     title: data.title,
     tags: tagIds,
   });
+
+  //send a job to the queue
+  // queue embedding job
+  const jobData: EmbeddingJobData = {
+    contentId: content._id.toString(),
+    userId,
+    url: data.link,
+    title: data.title,
+  };
+
+  try {
+    await embeddingQueue.add("embed", jobData, {
+      jobId: `embed-${content._id}`,
+      priority: 1,
+    });
+  } catch (err) {
+    console.error("Failed to queue embedding job:", err);
+    // optional: mark content as failed / pending
+  }
+
+  return content;
 }
 
 //#endregion
