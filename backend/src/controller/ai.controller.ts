@@ -50,16 +50,21 @@ export async function searchContent(
           _id: 0,
           contentId: "$_id",
           similarity: "$maxScore",
-          relevantChunk: 1,
+          // relevantChunk: 1,
           content: 1,
         },
       },
     ]);
 
+    console.log(process.env.FILTER_THRESHOLD);
+    const finalResult = results.filter(
+      (result) => result.similarity > parseFloat(process.env.FILTER_THRESHOLD!),
+    );
+
     res.json({
       query,
-      total: results.length,
-      results,
+      total: finalResult.length,
+      finalResult,
     });
   } catch (err) {
     next(err);
