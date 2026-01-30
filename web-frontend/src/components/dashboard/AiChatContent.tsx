@@ -1,0 +1,229 @@
+import { useState, useRef, useEffect } from "react";
+import ReactMarkdown from "react-markdown";
+import { FiSend, FiExternalLink, FiTrash2 } from "react-icons/fi";
+import { useAppDispatch, useAppSelector } from "../../hooks/redux";
+import magicIcon from "../../assets/images/icons/magic_icon.svg";
+import {
+  sendMessage,
+  addUserMessage,
+  clearChat,
+} from "../../store/features/chat";
+import InputField from "../ui/InputFiled";
+
+export default function AiChatContent() {
+  const dispatch = useAppDispatch();
+  const { messages, loading, sources } = useAppSelector((state) => state.chat);
+  const { user } = useAppSelector((state) => state.auth);
+
+  const [input, setInput] = useState("");
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // auto scroll
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
+
+  // clear chat
+  useEffect(() => {
+    return () => {
+      dispatch(clearChat());
+    };
+  }, [dispatch]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || loading) return;
+
+    const userMessage = input.trim();
+    setInput("");
+
+    // add mg to ui
+    dispatch(addUserMessage(userMessage));
+
+    // add msg in history
+    await dispatch(
+      sendMessage({
+        message: userMessage,
+        conversationHistory: messages,
+      }),
+    );
+  };
+
+  const handleClear = () => {
+    dispatch(clearChat());
+  };
+
+  const suggestedQuestions = [
+    "What Tweets  did I save?",
+    "Article where Elon was taking about OpenAI",
+    "What links from reddit do I have?",
+    "Summarize my open note related content",
+  ];
+
+  return (
+    <main className="min-h-screen bg-linear-to-b from-gray-50 to-white flex flex-col">
+      <div className="max-w-full mx-auto w-full flex flex-col h-screen">
+        <div className="p-6 pb-4 bg-gray-50 border-b border-black/20 sticky top-0 z-10">
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-2xl  font-bold text-gray-800">
+                Chat with Your Brain
+              </h1>
+            </div>
+            {messages.length > 0 && (
+              <button
+                onClick={handleClear}
+                className="p-2 text-gray-600 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+                title="Clear conversation"
+              >
+                <FiTrash2 size={20} />
+              </button>
+            )}
+          </div>
+        </div>
+        {/* msg container */}
+        <div className="flex-1 overflow-y-auto p-6 space-y-6 no-scrollbar px-10 ">
+          {/* welcome hai ji */}
+          {messages.length === 0 && (
+            <div className="text-center mt-12">
+              <h2 className="text-xl font-semibold text-gray-800 mb-2">
+                Hello, {user?.userName}! 👋
+              </h2>
+              <p className="text-gray-600 mb-6">
+                Ask me anything about your saved content
+              </p>
+              {/* suggestion */}
+              <div className="max-w-2xl mx-auto">
+                <p className="text-sm text-gray-500 mb-3">Try asking:</p>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                  {suggestedQuestions.map((question, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setInput(question)}
+                      className="p-3 bg-white border border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all text-left text-sm text-gray-700 hover:text-blue-700"
+                    >
+                      {question}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* msges */}
+          {messages.map((msg, index) => (
+            <div
+              key={index}
+              className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}
+            >
+              <div
+                className={`max-w-[85%] rounded-2xl px-4 py-3 ${
+                  msg.role === "user"
+                    ? "bg-blue-600 text-white"
+                    : "bg-white border border-gray-200 text-gray-900 shadow-sm"
+                }`}
+              >
+                <ReactMarkdown>{msg.content}</ReactMarkdown>
+                {msg.timestamp && (
+                  <p
+                    className={`text-[10px] mt-2 ${
+                      msg.role === "user" ? "text-gray-300" : "text-gray-400"
+                    }`}
+                  >
+                    {new Date(msg.timestamp).toLocaleTimeString([], {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
+                  </p>
+                )}
+              </div>
+            </div>
+          ))}
+          {/* loading bar */}
+          {loading && (
+            <div className="flex justify-start">
+              <div className="bg-white border border-gray-200 rounded-2xl px-4 py-3 shadow-sm">
+                <div className="flex gap-2">
+                  <div className="w-2 h-2 bg-blue-600 rounded-full animate-bounce" />
+                  <div
+                    className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"
+                    style={{ animationDelay: "0.1s" }}
+                  />
+                  <div
+                    className="w-2 h-2 bg-blue-600 rounded-full animate-bounce"
+                    style={{ animationDelay: "0.2s" }}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+          <div ref={messagesEndRef} />
+        </div>
+
+        {/* Sources Display */}
+        {sources.length > 0 && (
+          <div className="px-10 pb-4">
+            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
+              <p className="text-sm font-semibold text-blue-900 mb-3">
+                Sources referenced:
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {sources.map((source) => (
+                  <a
+                    key={source.id}
+                    href={source.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 bg-white px-3 py-2 rounded-lg text-sm text-blue-600 hover:bg-black/10 transition-colors border border-blue-200"
+                  >
+                    <span className="font-medium">
+                      {source.title.slice(0, 40)}
+                      {source.title.length > 40 ? "..." : ""}
+                    </span>
+                    <span className="text-xs text-white bg-blue-900 px-2 py-0.5 rounded-full">
+                      {source.similarity}%
+                    </span>
+                    <FiExternalLink size={14} />
+                  </a>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* input */}
+        <div className="p-6 pt-4 bg-white border-t border-black/25 sticky bottom-0">
+          <form onSubmit={handleSubmit} className="flex gap-3">
+            <InputField
+              icon={<img src={magicIcon} alt="magic" className="h-5 w-5" />}
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Ask about your saved content..."
+              disabled={loading}
+              variant="light"
+            />
+
+            <button
+              type="submit"
+              disabled={loading || !input.trim()}
+              className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center gap-2 font-medium"
+            >
+              {loading ? (
+                "Sending..."
+              ) : (
+                <>
+                  <FiSend size={18} />
+                  <span className="hidden md:inline">Send</span>
+                </>
+              )}
+            </button>
+          </form>
+        </div>
+      </div>
+    </main>
+  );
+}

@@ -61,7 +61,7 @@ export default function AiSearchContent() {
             <span>
               {hasSearched
                 ? "Top matches from your knowledge base"
-                : `Hello, ${user?.name}`}
+                : `Hello, ${user?.userName}`}
             </span>
 
             {!hasSearched && (

@@ -53,6 +53,7 @@ export const loadUser = createAsyncThunk<User, void, { rejectValue: string }>(
   async (_, { rejectWithValue }) => {
     try {
       const res = await api.get<User>("/auth/me");
+      console.log(res);
       return res.data;
     } catch (err) {
       if (axios.isAxiosError(err)) {

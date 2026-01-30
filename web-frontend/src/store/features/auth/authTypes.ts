@@ -1,7 +1,17 @@
+export interface Token {
+  totalRemaining: number;
+  lastRefillDate: Date;
+}
+
 export interface User {
-  id: string;
-  name: string;
+  _id: string;
+  userName: string;
   email: string;
+  plan: string;
+  tokens: Token;
+  isSubscribed: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface AuthState {

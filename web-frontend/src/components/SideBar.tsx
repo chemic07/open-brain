@@ -1,5 +1,7 @@
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import SidebarItem from "./ui/SideBarItem";
+import { AiTwotoneStar } from "react-icons/ai";
+
 import {
   FiMenu,
   FiHome,
@@ -16,6 +18,7 @@ import appLogo from "../assets/images/logo/app_logo2.svg";
 import { BottomItem } from "./ui/BottomSideBarItem";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { logout } from "../store/features/auth";
+import UpgradeCard from "./ui/UpgradeCard";
 
 interface SideBarProps {
   isOpen: boolean;
@@ -31,7 +34,7 @@ export default function SideBar({
   setActive,
 }: SideBarProps) {
   const dispatch = useAppDispatch();
-  const { loading } = useAppSelector((state) => state.auth);
+  const { loading, user } = useAppSelector((state) => state.auth);
 
   function handleLogout() {
     try {
@@ -119,7 +122,7 @@ export default function SideBar({
       </div>
 
       {/* bottom */}
-      <div className="mt-auto px-2 pb-4 space-y-1 border-t border-gray-50 pt-4 overflow-hidden shrink-0">
+      <div className="mt-auto px-2  space-y-1 border-t border-gray-50 pt-4 overflow-hidden shrink-0">
         <BottomItem
           icon={<FiSettings size={18} className="shrink-0" />}
           label="Settings"
@@ -129,10 +132,23 @@ export default function SideBar({
           icon={<FiLogOut size={18} className="shrink-0" />}
           label="Logout"
           open={isOpen}
-          color="text-red-500 hover:bg-red-50"
+          color="text-red-500 hover:bg-red-100"
           onClick={handleLogout}
         />
       </div>
+
+      <AnimatePresence>
+        {isOpen && !user?.isSubscribed && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.2 }}
+          >
+            <UpgradeCard />
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 
@@ -184,5 +200,10 @@ const mainItems = [
 
 const brainItems = [
   { id: "aiSearch", label: "AI Search", icon: FiBox },
+  {
+    id: "aiChat",
+    label: "AI Chat",
+    icon: AiTwotoneStar,
+  },
   { id: "shared", label: "Shared Brains", icon: FiUsers },
 ];

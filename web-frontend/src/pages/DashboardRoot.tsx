@@ -12,5 +12,11 @@ export default function DashboardRoot() {
     );
   }
 
-  return isAuthenticated ? <Outlet /> : <Navigate to="/auth/signin" replace />;
+  return isAuthenticated ? (
+    <Outlet />
+  ) : (
+    // replace to remove the the page from history stack
+    // state to make user if login failes the user login and redirect to the last stacked page
+    <Navigate to="/auth/signin" replace />
+  );
 }

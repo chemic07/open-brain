@@ -9,6 +9,7 @@ import { findOrCreateTags } from "./tag.services";
 import { Content } from "../models/content.model";
 import { UserModel } from "../models/user.model";
 import { PlanType } from "../types/user";
+import { Embedding } from "../../shared/models/embedding.model";
 
 //#region  add content
 export async function addContentService(data: ContentInput, userId: string) {
@@ -86,12 +87,24 @@ export async function getAllContentService(userId: string) {
 }
 
 export async function deleteContentService(id: string, userId: string) {
-  const deleted = await Content.findOneAndDelete({ _id: id, userId });
+  // del content
+  const deletedContent = await Content.findOneAndDelete({ _id: id, userId });
 
-  if (!deleted) {
+  if (!deletedContent) {
     throw new AppError("Content not found", 404);
   }
 
-  return deleted;
+  //del all embeding with ref to deleted content id
+  await Embedding.deleteMany({ contentId: id, userId });
+
+  // check if other users are ref the link
+  const isLinkShared = await Content.exists({ link: deletedContent.link });
+
+  if (!isLinkShared) {
+    // if noone is using delete the global
+    await Link.findByIdAndDelete(deletedContent.link);
+  }
+
+  return deletedContent;
 }
 //#endregion

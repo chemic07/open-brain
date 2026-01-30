@@ -14,7 +14,7 @@ export function BottomItem({
   icon,
   label,
   open,
-  color = "text-gray-600 hover:bg-gray-50",
+  color = "text-gray-600 hover:bg-gray-200",
 }: BottomItemProps) {
   return (
     <button

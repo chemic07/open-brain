@@ -59,7 +59,7 @@ function NavBar() {
         {/* go to auth*/}
         <div className="flex items-center gap-4">
           <Button
-            text={isAuthenticated ? "Dashboard" : "Sign Up"}
+            text={isAuthenticated ? "Dashboard" : "Sign In"}
             variant="glass"
             size="sm"
             onClick={() => {

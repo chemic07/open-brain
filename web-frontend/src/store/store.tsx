@@ -3,6 +3,8 @@ import { authReducer } from "./features/auth";
 import { contentReducer } from "./features/content";
 import { shareRedcuer } from "./features/share";
 import { searchReducer } from "./features/search";
+import { userReducer } from "./features/user";
+import { chatReducer } from "./features/chat";
 
 export const store = configureStore({
   reducer: {
@@ -10,6 +12,8 @@ export const store = configureStore({
     content: contentReducer,
     share: shareRedcuer,
     search: searchReducer,
+    user: userReducer,
+    chat: chatReducer,
   },
 });
 

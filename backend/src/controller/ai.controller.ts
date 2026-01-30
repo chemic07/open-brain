@@ -117,7 +117,7 @@ export async function chatWithAI(
         },
       },
       { $sort: { maxScore: -1 } },
-      { $limit: 5 }, // top 5
+      { $limit: 10 }, // top 10
       {
         $lookup: {
           from: "contents",
@@ -147,10 +147,12 @@ export async function chatWithAI(
       },
     ]);
 
+    console.log(relevantContent);
+
     //  filter by  threshold
-    const threshold = parseFloat(process.env.FILTER_THRESHOLD!);
+    // const threshold = parseFloat(process.env.FILTER_THRESHOLD!);
     const filteredContent = relevantContent.filter(
-      (item: any) => item.similarity > threshold,
+      (item: any) => item.similarity > 0.5,
     );
 
     // check if have content
@@ -174,6 +176,8 @@ Content: ${item.relevantText || item.description || ""}
 ---`,
       )
       .join("\n\n");
+
+    console.log(context);
 
     //gemini call
     const aiResponse = await AIService.chatWithContext(

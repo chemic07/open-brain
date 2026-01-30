@@ -3,6 +3,7 @@ import SideBar from "../components/SideBar";
 import Header from "../components/dashboard/Header";
 import DashboardContent from "../components/dashboard/DashboardContent";
 import AiSearchContent from "../components/dashboard/AiSearchContent";
+import AiChatContent from "../components/dashboard/AiChatContent";
 
 export default function DashboardOverview() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -23,6 +24,8 @@ export default function DashboardOverview() {
         return <PlaceholderView title="Saved Articles" />;
       case "aiSearch":
         return <AiSearchContent />;
+      case "aiChat":
+        return <AiChatContent />;
       default:
         return <DashboardContent />;
     }
@@ -40,7 +43,7 @@ export default function DashboardOverview() {
       <div className="flex-1 flex flex-col min-w-0">
         <Header setIsOpen={setIsSidebarOpen} />
 
-        <main className="flex-1 p-4 md:p-8 overflow-y-auto custom-scrollbar">
+        <main className="flex-1 p-4 md:p-6 overflow-y-auto custom-scrollbar">
           <div className="max-w-7xl mx-auto">
             {/* content */}
             {renderContent()}
