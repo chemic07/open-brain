@@ -1,9 +1,17 @@
 import mongoose, { Schema } from "mongoose";
+import { PlanType } from "../types/user";
 
 interface UserDocument {
   userName: string;
   password: string;
   email: string;
+  plan: PlanType;
+  tokens: {
+    totalRemaining: number;
+    lastRefillDate: Date;
+  };
+  isSubscribed: boolean;
+  stripeSubscriptionId?: string; //stripe
 }
 
 const userSchema = new Schema<UserDocument>(
@@ -16,6 +24,28 @@ const userSchema = new Schema<UserDocument>(
       unique: true,
       lowercase: true,
       trim: true,
+    },
+    plan: {
+      type: String,
+      enum: Object.values(PlanType),
+      default: PlanType.FREE,
+    },
+    tokens: {
+      totalRemaining: {
+        type: Number,
+        default: 1000, // deafult token
+      },
+      lastRefillDate: {
+        type: Date,
+        default: Date.now,
+      },
+    },
+    isSubscribed: {
+      type: Boolean,
+      default: false,
+    },
+    stripeSubscriptionId: {
+      type: String,
     },
   },
   {

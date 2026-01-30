@@ -7,9 +7,25 @@ import { AppError } from "../utils/app_error";
 import type { ContentInput } from "../validation/content.schema";
 import { findOrCreateTags } from "./tag.services";
 import { Content } from "../models/content.model";
+import { UserModel } from "../models/user.model";
+import { PlanType } from "../types/user";
 
 //#region  add content
 export async function addContentService(data: ContentInput, userId: string) {
+  const user = await UserModel.findById(userId);
+  if (!user) throw new AppError("User not found", 404);
+
+  if (user.plan === PlanType.FREE) {
+    const currentCount = await Content.countDocuments({ userId });
+    //limit 50 to free user
+    if (currentCount >= 50) {
+      throw new AppError(
+        "Limit reached: Free plan is restricted to 50 links. Please upgrade to Plus.",
+        403,
+      );
+    }
+  }
+
   // find or create link
   let link = await Link.findOne({ url: data.link });
 

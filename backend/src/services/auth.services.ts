@@ -1,4 +1,5 @@
 import { UserModel } from "../models/user.model";
+import { PlanType } from "../types/user";
 import { AppError } from "../utils/app_error";
 import type { SigninInput, SignupInput } from "../validation/auth.schema";
 import bcrypt from "bcrypt";
@@ -16,10 +17,16 @@ export async function signupService(data: SignupInput) {
 
   const hashPassword = await bcrypt.hash(password, 10);
 
-  const user = UserModel.create({
+  const user = await UserModel.create({
     userName,
     email,
     password: hashPassword,
+    plan: PlanType.FREE,
+    tokens: {
+      totalRemaining: parseInt(Bun.env.INITIAL_TOKENS!),
+      lastRefillDate: new Date(),
+    },
+    isSubscribed: false,
   });
 
   return user;
@@ -52,8 +59,14 @@ export async function loginServices(data: SigninInput) {
 
   return {
     token,
-    userName: existingUser.userName,
-    email: existingUser.email,
+    user: {
+      id: existingUser._id,
+      userName: existingUser.userName,
+      email: existingUser.email,
+      plan: existingUser.plan,
+      tokensRemaining: existingUser.tokens.totalRemaining,
+      isSubscribed: existingUser.isSubscribed,
+    },
   };
 }
 //#endregion

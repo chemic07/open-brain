@@ -46,6 +46,15 @@ export async function searchContent(
       },
       { $unwind: "$content" },
       {
+        $lookup: {
+          from: "links",
+          localField: "content.link",
+          foreignField: "_id",
+          as: "content.link",
+        },
+      },
+      { $unwind: "$content.link" },
+      {
         $project: {
           _id: 0,
           contentId: "$_id",
@@ -68,5 +77,124 @@ export async function searchContent(
     });
   } catch (err) {
     next(err);
+  }
+}
+
+export async function chatWithAI(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const userId = req.userId!;
+    const { message, conversationHistory } = req.body;
+
+    if (!message || !message.trim()) {
+      return res.status(400).json({ error: "Message is required" });
+    }
+
+    //  embedding gen
+    const queryEmbedding = await AIService.generateEmbedding(message);
+
+    //search with vector
+    const relevantContent = await Embedding.aggregate([
+      {
+        $vectorSearch: {
+          index: "embedding_index",
+          path: "embedding",
+          queryVector: queryEmbedding,
+          numCandidates: 100,
+          limit: 10,
+          filter: { userId: new Types.ObjectId(userId) },
+        },
+      },
+      {
+        $group: {
+          _id: "$contentId",
+          maxScore: { $max: { $meta: "vectorSearchScore" } },
+          relevantText: { $first: "$text" },
+          metadata: { $first: "$metadata" },
+        },
+      },
+      { $sort: { maxScore: -1 } },
+      { $limit: 5 }, // top 5
+      {
+        $lookup: {
+          from: "contents",
+          localField: "_id",
+          foreignField: "_id",
+          as: "content",
+        },
+      },
+      { $unwind: "$content" },
+      {
+        $lookup: {
+          from: "links",
+          localField: "content.link",
+          foreignField: "_id",
+          as: "content.link",
+        },
+      },
+      { $unwind: "$content.link" },
+      {
+        $project: {
+          title: "$content.title",
+          url: "$content.link.url",
+          description: "$content.link.description",
+          relevantText: 1,
+          similarity: "$maxScore",
+        },
+      },
+    ]);
+
+    //  filter by  threshold
+    const threshold = parseFloat(process.env.FILTER_THRESHOLD!);
+    const filteredContent = relevantContent.filter(
+      (item: any) => item.similarity > threshold,
+    );
+
+    // check if have content
+    if (filteredContent.length === 0) {
+      return res.status(200).json({
+        message:
+          "I don't have any relevant information about that in your saved content. Could you rephrase your question or ask about something else?",
+        sources: [],
+        hasContext: false,
+      });
+    }
+
+    // building cotext
+    const context = filteredContent
+      .map(
+        (item: any, index: number) =>
+          `[Source ${index + 1}]
+Title: ${item.title}
+URL: ${item.url}
+Content: ${item.relevantText || item.description || ""}
+---`,
+      )
+      .join("\n\n");
+
+    //gemini call
+    const aiResponse = await AIService.chatWithContext(
+      message,
+      context,
+      conversationHistory,
+    );
+
+    // return
+    return res.status(200).json({
+      message: aiResponse,
+      sources: filteredContent.map((item: any, index: number) => ({
+        id: index + 1,
+        title: item.title,
+        url: item.url,
+        similarity: Math.round(item.similarity * 100),
+      })),
+      hasContext: true,
+    });
+  } catch (error: any) {
+    console.error("AI Chat error:", error);
+    next(error);
   }
 }

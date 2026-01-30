@@ -31,7 +31,7 @@ userRouter.post(
 );
 
 //delete account
-userRouter.delete("/user/delete-account", authMiddleware, deleteAccount);
+userRouter.delete("/user/account", authMiddleware, deleteAccount);
 
 //get stats
 userRouter.get("/user/stats", authMiddleware, getUserStats);
