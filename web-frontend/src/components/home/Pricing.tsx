@@ -79,12 +79,14 @@ export default function Pricing() {
             <PricingCard
               title="Free"
               price="₹0"
-              subtitle="For personal use"
+              subtitle="Perfect for getting started"
               features={[
-                "Save unlimited links",
-                "Basic search",
-                "Tag & organize content",
+                "Save up to 100 links",
+                "Basic content organization",
+                "Manual tagging",
                 "Private collections",
+                "Basic search",
+                "Limitied AI  semantic search",
               ]}
             />
           </motion.div>
@@ -92,29 +94,31 @@ export default function Pricing() {
           <motion.div variants={cardVariants}>
             <PricingCard
               highlighted
-              title="Pro"
-              price="₹299/mo"
+              title="Plus"
+              price="₹149/mo"
               subtitle="For power users"
               features={[
-                "AI semantic search",
-                "Smart suggestions",
-                "Advanced tagging",
-                "Unlimited collections",
-                "Priority updates",
+                "Unlimited links",
+                "5x more AI-powered semantic search",
+                "Auto-generated tags & summaries",
+                "Chat with your content (AI assistant)",
+                "Share collections publicly",
+                "Priority processing",
               ]}
             />
           </motion.div>
 
           <motion.div variants={cardVariants}>
             <PricingCard
-              title="Team"
-              price="₹799/mo"
-              subtitle="For collaboration"
+              title="Pro"
+              price="₹399/mo"
+              subtitle="For teams & professionals"
               features={[
-                "Everything in Pro",
-                "Shared team spaces",
-                "Role-based access",
-                "Team analytics",
+                "Everything in Plus",
+                "Chat 10x with your content (AI assistant)",
+                "Team workspaces (up to 5 members)",
+                "Collaborative collections",
+                "Custom integrations",
                 "Priority support",
               ]}
             />
