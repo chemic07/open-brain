@@ -27,7 +27,7 @@ export default function DashboardContent() {
       <div className="flex flex-wrap items-center justify-between gap-4">
         {/* heading */}
         <div className="flex flex-col">
-          <h1 className="text-3xl font-bold text-gray-900 capitalize tracking-tight">
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 capitalize tracking-tight">
             Dashboard
           </h1>
           <p className="text-gray-500 mt-2">
@@ -52,14 +52,14 @@ export default function DashboardContent() {
       </div>
 
       {/* stats */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-3 md:grid-cols-3 gap-3 md:gap-6">
         <MetricCard
           label="Total Links"
           value={contents.length.toString()}
           change="+15.5%"
           isUp={true}
           previous="00 more from last month"
-          icon={<FiEye className="text-blue-600" />}
+          icon={<FiEye className="w-3 h-3 md:w-5 md:h-5 text-gray-600" />}
         />
         <MetricCard
           label="Total Shared"
@@ -67,7 +67,7 @@ export default function DashboardContent() {
           change="+8.4%"
           isUp={true}
           previous="00 more from last month"
-          icon={<FiShare2 className="text-gray-600" />}
+          icon={<FiShare2 className="w-3 h-3 md:w-5 md:h-5 text-gray-600" />}
         />
         <MetricCard
           label="Uncategorized"
@@ -75,7 +75,7 @@ export default function DashboardContent() {
           change="-10.5%"
           isUp={false}
           previous="00 more from last month"
-          icon={<FiTrash2 className="text-gray-600" />}
+          icon={<FiTrash2 className="w-3 h-3 md:w-5 md:h-5 text-gray-600" />}
         />
       </div>
 

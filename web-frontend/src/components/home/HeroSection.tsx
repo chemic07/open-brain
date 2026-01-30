@@ -17,7 +17,7 @@ export default function HeroSection() {
   return (
     <section
       id="home"
-      className="relative isolate flex flex-col items-center justify-center min-h-[120vh] md:min-h-[130vh] w-full bg-[#020617] overflow-hidden px-4"
+      className="relative isolate flex flex-col items-center justify-start md:justify-center min-h-screen pt-30 md:pt-0 md:min-h-[130vh] w-full bg-[#020617] overflow-hidden px-4"
     >
       <div className="absolute inset-0 z-0 pointer-events-none">
         {/* glow */}
@@ -63,12 +63,13 @@ export default function HeroSection() {
       </div>
 
       {/* badge */}
-      <div className="z-10 mb-8 flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 mt-30 py-1.5 text-xs font-medium text-gray-300 backdrop-blur-sm transition hover:border-white/20">
-        <span className="rounded-full bg-blue-600 px-2 py-0.5 text-[10px] font-bold text-white uppercase tracking-wider">
+      <div className="z-10 mb-8 flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3 py-1 mt-0 md:mt-30 md:px-4 md:py-1.5 md:gap-2 text-[10px] md:text-xs font-medium text-gray-300 backdrop-blur-sm transition hover:border-white/20">
+        <span className="rounded-full bg-blue-600 px-1.5 py-0.5 text-[9px] md:text-[10px] font-bold text-white uppercase tracking-wider">
           New
         </span>
         <span className="flex items-center gap-1">
-          AI Semantic Search is Live
+          AI Semantic Search
+          <span className="hidden xs:inline"> is Live</span>
           <FiArrowDownRight size={12} className="text-gray-500" />
         </span>
       </div>
@@ -78,13 +79,13 @@ export default function HeroSection() {
         style={{ y: textY, scale: textScale, opacity: textOpacity }}
         className="z-10 max-w-4xl text-center"
       >
-        <h1 className="text-5xl md:text-5xl font-bold tracking-tight text-white mb-6 leading-[1.1]">
+        <h1 className="text-2xl md:text-5xl font-bold tracking-tight text-white mb-6 leading-[1.1]">
           Build Your Second Brain
           <br />
           <span className="opacity-80">Find Anything in Seconds.</span>
         </h1>
 
-        <p className="mx-auto max-w-2xl text-lg text-gray-400 mb-10 leading-relaxed">
+        <p className="mx-auto max-w-2xl  text-sm md:text-lg text-gray-400 mb-10 leading-relaxed">
           Save links, notes, and ideas in one place. Our AI understands your
           content, so you can search smarter, organize faster, and never lose
           useful knowledge again.
@@ -115,7 +116,7 @@ export default function HeroSection() {
           <img
             src={dashboardImg}
             alt="Dashboard Preview"
-            className="w-full h-full rounded-2xl object-contain"
+            className="w-full h-full rounded-xl md:rounded-2xl object-contain"
           />
         </div>
       </motion.div>

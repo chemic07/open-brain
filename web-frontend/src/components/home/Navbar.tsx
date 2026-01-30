@@ -67,7 +67,7 @@ function NavBar() {
                 ? navigate("/dashboard")
                 : navigate("/auth/signin");
             }}
-            className="bg-white/5 border-white/10 hover:bg-white/10 px-6"
+            className="bg-white/5 border-white/10 hover:bg-white/10 px-3 md:px-6"
           />
         </div>
       </nav>

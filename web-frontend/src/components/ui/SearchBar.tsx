@@ -68,7 +68,7 @@ export default function SearchBar({
 
       {/* Keyboard Shortcut - Hidden when typing */}
       {!query && (
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 flex items-center gap-1 px-2 py-1 border border-gray-200 rounded-md bg-white text-[10px] text-gray-400 font-mono shadow-sm pointer-events-none">
+        <div className="hidden md:flex absolute right-3 top-1/2 -translate-y-1/2 items-center gap-1 px-2 py-1 border border-gray-200 rounded-md bg-white text-[10px] text-gray-400 font-mono shadow-sm pointer-events-none">
           <span>⌘</span>
           <span>K</span>
         </div>

@@ -17,25 +17,22 @@ export default function SignInPage() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const data = new FormData(e.currentTarget);
     const email = data.get("email") as string;
     const password = data.get("password") as string;
 
     const resultAction = await dispatch(loginUser({ email, password }));
 
-    // If login is successful, navigate to dashboard
     if (loginUser.fulfilled.match(resultAction)) {
       showToast({
         type: "success",
         message: "Welcome back!",
-        options: {
-          description: "You have successfully logged in.",
-        },
+        options: { description: "You have successfully logged in." },
       });
       navigate("/dashboard");
     }
   };
+
   useEffect(() => {
     return () => {
       dispatch(clearError());
@@ -43,45 +40,49 @@ export default function SignInPage() {
   }, [dispatch]);
 
   return (
-    <main className="bg-radial-[at_50%_50%] from-blue-600 to-blue-900 to-90%">
-      <div className=" min-h-screen flex justify-center py-10">
-        <div className="flex justify-center rounded-2xl overflow-hidden w-full max-w-5xl">
+    <main className="bg-radial-[at_50%_50%] from-blue-600 to-blue-900 to-90% min-h-screen">
+      <div className="flex justify-center items-center min-h-screen py-0 px-0 md:px-4 md:py-10">
+        <div className="flex flex-col md:flex-row md:rounded-2xl overflow-hidden w-full max-w-4xl min-h-screen md:min-h-120 shadow-2xl">
+          {/* left*/}
           <div
             className={clsx(
-              "bg-linear-to-br from-blue-100 via-blue-400 via-blue-200 to-black-100",
-              "text-white p-6 w-1/2 flex flex-col justify-between",
+              "bg-linear-to-br from-blue-100 via-blue-400 via-blue-200 to-blue-900",
+              "text-white p-8 md:w-1/2 flex flex-col justify-between h-64 md:h-auto",
             )}
           >
             <div className="flex items-center">
-              <div className="bg-white rounded-full p-1">
-                <FiBarChart2 className="text-black text-sm" />
+              <div className="bg-white rounded-full p-1.5">
+                <FiBarChart2 className="text-black text-base" />
               </div>
-              <h1 className="ml-3 font-semibold">Open Brain</h1>
+              <h1 className="ml-3 font-bold tracking-tight text-white">
+                Open Brain
+              </h1>
             </div>
 
-            <div>
-              <p className="font-semibold text-3xl">Welcome Back 👋</p>
-              <p className="text-sm opacity-80 mt-1">
-                Sign in to continue building your second brain and collaborating
-                with your friends.
+            <div className="mt-4 md:mt-0">
+              <p className="font-semibold text-2xl md:text-4xl text-white">
+                Welcome Back 👋
+              </p>
+              <p className="text-xs md:text-sm opacity-90 mt-1 md:mt-2 text-white/80 max-w-xs">
+                Sign in to continue building your second brain.
               </p>
             </div>
           </div>
 
+          {/* right */}
           <form
             onSubmit={handleSubmit}
-            className="bg-black text-white py-10 px-15 w-1/2 flex flex-col justify-between"
+            className="bg-black text-white py-10 px-6 sm:px-10 md:px-15 flex-1 md:w-1/2 flex flex-col justify-center gap-6"
           >
-            <div className="flex justify-center items-center flex-col text-center gap-2">
-              <h1 className="text-2xl font-semibold">
-                Sign In to Your Account
-              </h1>
-              <p className="text-[12px] opacity-80 max-w-sm">
+            <div className="flex flex-col text-center gap-2">
+              <h1 className="text-2xl md:text-3xl font-semibold">Sign In</h1>
+              <p className="text-xs md:text-sm opacity-60">
                 Enter your credentials to access your workspace.
               </p>
             </div>
 
-            <div className="flex flex-row gap-2">
+            {/* social login */}
+            <div className="flex flex-row gap-3">
               <AuthButton
                 type="button"
                 text="Google"
@@ -98,20 +99,24 @@ export default function SignInPage() {
               />
             </div>
 
-            <div className="flex items-center my-4">
-              <hr className="grow border-t border-gray-400" />
-              <span className="px-2 text-gray-500 text-[13px]">Or</span>
-              <hr className="grow border-t border-gray-400" />
+            <div className="flex items-center">
+              <hr className="grow border-t border-white/10" />
+              <span className="px-3 text-gray-500 text-xs uppercase tracking-widest">
+                Or
+              </span>
+              <hr className="grow border-t border-white/10" />
             </div>
 
-            <div className="flex flex-col mb-5 gap-3">
+            <div className="flex flex-col gap-4">
               <InputField
+                variant="dark"
                 name="email"
                 placeholder="e.g. john@email.com"
                 label="Email"
                 required
               />
               <InputField
+                variant="dark"
                 name="password"
                 placeholder="********"
                 label="Password"
@@ -120,20 +125,24 @@ export default function SignInPage() {
               />
 
               {error && (
-                <p className="text-red-500 text-xs text-center mt-2">{error}</p>
+                <p className="text-red-500 text-xs text-center animate-pulse">
+                  {error}
+                </p>
               )}
             </div>
+
             <AuthButton
               type="submit"
               text={loading ? "Signing in..." : "Sign In"}
               disabled={loading}
+              className="mt-2"
             />
 
-            <div className="flex flex-row justify-center gap-x-2">
+            <div className="flex flex-row justify-center gap-x-2 mt-2 text-sm">
               <p className="text-gray-400">Don’t have an account?</p>
               <Link
                 to="/auth/signup"
-                className="text-white font-semibold hover:underline"
+                className="text-white font-semibold hover:text-blue-400 transition-colors underline underline-offset-4"
               >
                 Sign Up
               </Link>

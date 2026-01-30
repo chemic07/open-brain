@@ -14,10 +14,8 @@ export default function SignUpPage() {
 
   const { loading, error } = useAppSelector((state) => state.auth);
 
-  /* ---------------- HANDLERS ---------------- */
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     const data = new FormData(e.currentTarget);
     const firstName = data.get("firstName");
     const lastName = data.get("lastName");
@@ -37,7 +35,6 @@ export default function SignUpPage() {
     }
   };
 
-  //error clear
   useEffect(() => {
     return () => {
       dispatch(clearError());
@@ -45,119 +42,124 @@ export default function SignUpPage() {
   }, [dispatch]);
 
   return (
-    <main className="bg-radial-[at_50%_50%] from-blue-600 to-blue-900 to-90%">
-      <div className="min-h-screen flex justify-center py-10">
-        <div className="flex justify-center rounded-2xl overflow-hidden w-full max-w-5xl">
-          {/* -------- LEFT PANEL -------- */}
+    <main className="bg-radial-[at_50%_50%] from-blue-600 to-blue-900 to-90% min-h-screen">
+      <div className="flex justify-center items-center py-0 px-0 md:px-4 md:py-10">
+        <div className="flex flex-col md:flex-row md:rounded-2xl overflow-hidden w-full max-w-5xl shadow-2xl min-h-[700px]">
+          {/* left */}
           <div
             className={clsx(
               "bg-linear-to-br from-blue-100 via-blue-400 via-blue-200 to-blue-900",
-              "text-white p-6 w-1/2 flex flex-col justify-between",
+              "text-white p-8 md:w-1/2 flex flex-col justify-between",
             )}
           >
             <div className="flex items-center">
-              <div className="bg-white rounded-full p-1">
+              <div className="bg-white rounded-full p-1.5 shadow-sm">
                 <FiBarChart2 className="text-black text-sm" />
               </div>
-              <h1 className="ml-3 font-semibold">Open Brain</h1>
+              <h1 className="ml-3 font-bold tracking-tight text-white ">
+                Open Brain
+              </h1>
             </div>
 
-            <div>
-              <p className="font-semibold text-3xl">
-                Save Everything. Find Anything.
+            <div className="mt-10 md:mt-0">
+              <p className="font-semibold text-3xl md:text-4xl text-white leading-tight">
+                Save Everything. <br className="hidden md:block" /> Find
+                Anything.
               </p>
-              <p className="text-sm opacity-80 mt-1">
+              <p className="text-sm md:text-base opacity-90 mt-3 text-white/80 max-w-sm">
                 Drop links, notes, and ideas into your second brain. Search them
-                later with AI-powered semantic search and never lose context
-                again.
+                later with AI-powered semantic search.
               </p>
             </div>
           </div>
-
-          {/* -------- RIGHT PANEL -------- */}
+          {/* right */}
           <form
             onSubmit={handleSubmit}
-            className="bg-black text-white py-10 px-15 w-1/2 flex flex-col justify-between"
+            className="bg-black text-white py-10 px-6 sm:px-10 md:px-15 md:w-1/2 flex flex-col justify-center gap-5"
           >
-            <div className="flex justify-center items-center flex-col text-center gap-2">
-              <h1 className="text-2xl font-semibold">Create Your Brain</h1>
-              <p className="text-[12px] opacity-80 max-w-sm">
-                Start building your personal knowledge hub and share curated
-                collections with others.
+            <div className="flex flex-col text-center gap-2">
+              <h1 className="text-2xl md:text-3xl font-semibold">
+                Create Your Brain
+              </h1>
+              <p className="text-xs md:text-sm opacity-60">
+                Start building your personal knowledge hub today.
               </p>
             </div>
-
-            {/* -------- SOCIAL LOGIN (future) -------- */}
-            <div className="flex flex-row gap-2">
+            {/* social login */}
+            <div className="flex flex-row gap-3">
               <AuthButton
-                text="Continue with Google"
+                text="Google"
                 variant="authOutline"
                 width="full"
                 headIcon={<FaGoogle size={18} />}
               />
               <AuthButton
-                text="Continue with X"
+                text="X"
                 variant="authOutline"
                 width="full"
                 headIcon={<FiTwitter size={18} />}
               />
             </div>
-
-            <div className="flex items-center my-4">
-              <hr className="grow border-t border-gray-400" />
-              <span className="px-2 text-gray-500 text-[13px]">or</span>
-              <hr className="grow border-t border-gray-400" />
+            <div className="flex items-center">
+              <hr className="grow border-t border-white/10" />
+              <span className="px-3 text-gray-500 text-[11px] uppercase tracking-widest">
+                or
+              </span>
+              <hr className="grow border-t border-white/10" />
             </div>
-
-            {/* -------- FORM -------- */}
-            <div className="flex flex-col mb-5 gap-3">
-              <div className="flex flex-row gap-4">
+            {/* form */}
+            <div className="flex flex-col gap-4">
+              <div className="flex flex-col sm:flex-row gap-4">
                 <InputField
+                  variant="dark"
                   name="firstName"
                   placeholder="First name"
                   label="First Name"
-                  required={true}
+                  required
                 />
                 <InputField
+                  variant="dark"
                   name="lastName"
                   placeholder="Last name"
                   label="Last Name"
-                  required={true}
+                  required
                 />
               </div>
 
               <InputField
+                variant="dark"
                 name="email"
                 placeholder="you@openbrain.app"
                 label="Email"
-                required={true}
+                required
               />
               <InputField
+                variant="dark"
                 name="password"
                 placeholder="Create a password"
                 label="Password"
                 type="password"
-                required={true}
+                required
               />
 
               {error && (
-                <p className="text-red-500 text-sm mt-1 text-center">{error}</p>
+                <p className="text-red-500 text-xs text-center animate-pulse">
+                  {error}
+                </p>
               )}
             </div>
-
-            {/* -------- SUBMIT -------- */}
             <AuthButton
               text={loading ? "Creating..." : "Create Account"}
               width="full"
               disabled={loading}
               type="submit"
+              className="mt-2"
             />
-
-            <div className="flex flex-row justify-center gap-x-2 mt-3">
+            <div className="flex flex-row justify-center gap-x-2 mt-2 text-sm">
               <p className="text-gray-400">Already have a brain?</p>
               <Link
                 to="/auth/signin"
-                className="text-white font-semibold hover:underline"
+                className="text-white font-semibold hover:text-blue-400 transition-colors underline underline-offset-4"
               >
                 Sign In
               </Link>

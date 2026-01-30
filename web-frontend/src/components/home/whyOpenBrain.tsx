@@ -25,7 +25,7 @@ export default function WhyOpenBrain() {
   return (
     <section
       id="why"
-      className="relative w-full flex flex-col items-center justify-center overflow-hidden py-24 px-45"
+      className="relative w-full gird grid-cols-1 items-center justify-center overflow-hidden px-3 py-20"
     >
       {/* radial glow */}
       <div
@@ -52,10 +52,10 @@ export default function WhyOpenBrain() {
 
           {/* text */}
           <div className="text-center max-w-2xl">
-            <h1 className="text-white text-5xl font-semibold">
+            <h1 className="text-white text-3xl md:text-5xl font-semibold">
               Why Open Brain?
             </h1>
-            <p className="text-gray-400 mt-5 font-medium">
+            <p className="text-gray-400 mt-5 text-sm md:font-medium">
               Open Brain helps you capture, organize, and rediscover everything
               you learn online. Save links, search with AI, and turn scattered
               resources into structured knowledge.
