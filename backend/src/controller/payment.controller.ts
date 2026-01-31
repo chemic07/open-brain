@@ -8,6 +8,9 @@ export async function createCheckoutSession(
   next: NextFunction,
 ) {
   try {
+    console.log("init the check out");
+    console.log(process.env.STRIPE_PLUS_PRICE_ID || "not found");
+    console.log(process.env.STRIPE_PRO_PRICE_ID || "not found");
     const userId = req.userId!;
     const { plan } = req.body; // plsu pro
 
@@ -41,6 +44,7 @@ export async function createCheckoutSession(
       },
     });
 
+    console.log(session);
     return res.status(200).json({
       sessionId: session.id,
       url: session.url,
@@ -82,13 +86,11 @@ export async function cancelSubscription(
   }
 }
 
-// Webhook handler
 export async function handleWebhook(req: Request, res: Response) {
   const sig = req.headers["stripe-signature"] as string;
-
   let event;
   try {
-    event = stripe.webhooks.constructEvent(
+    event = await stripe.webhooks.constructEventAsync(
       req.body,
       sig,
       process.env.STRIPE_WEBHOOK_SECRET!,
@@ -97,17 +99,21 @@ export async function handleWebhook(req: Request, res: Response) {
     return res.status(400).send(`Webhook Error: ${err.message}`);
   }
 
+  //event
   if (event.type === "checkout.session.completed") {
     const session = event.data.object as any;
-    const { userId, plan } = session.metadata;
 
-    await UserModel.findByIdAndUpdate(userId, {
-      plan,
-      isSubscribed: true,
-      stripeSubscriptionId: session.subscription,
-      "tokens.totalRemaining": plan === "PLUS" ? 10000 : 50000,
-    });
+    if (session.metadata && session.metadata.userId) {
+      const { userId, plan } = session.metadata;
+
+      await UserModel.findByIdAndUpdate(userId, {
+        plan,
+        isSubscribed: true,
+        stripeCustomerId: session.customer,
+        stripeSubscriptionId: session.subscription,
+        $inc: { "tokens.totalRemaining": plan === "PLUS" ? 10000 : 50000 },
+      });
+    }
   }
-
   res.json({ received: true });
 }

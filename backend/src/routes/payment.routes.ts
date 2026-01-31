@@ -21,10 +21,4 @@ paymentRouter.post(
   cancelSubscription,
 );
 
-paymentRouter.post(
-  "/api/v1/payment/webhook",
-  express.raw({ type: "application/json" }),
-  handleWebhook,
-);
-
 export default paymentRouter;

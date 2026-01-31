@@ -7,17 +7,23 @@ import shareRouter from "./routes/share.routes";
 import userRouter from "./routes/user.routes";
 import aiRouter from "./routes/ai.routes";
 import paymentRouter from "./routes/payment.routes";
+import { handleWebhook } from "./controller/payment.controller";
 
 const app = express();
 app.use(cors());
+app.post(
+  "/api/v1/payment/webhook",
+  express.raw({ type: "application/json" }),
+  handleWebhook,
+);
 app.use(express.json());
 
+app.use(paymentRouter);
 app.use(authRouter);
 app.use("/api/v1/", userRouter);
 app.use("/api/v1/content", contentRouter);
 app.use(shareRouter);
 app.use(aiRouter);
-app.use(paymentRouter);
 app.use(errorMiddlerware);
 
 export default app;

@@ -11,6 +11,7 @@ interface UserDocument {
     lastRefillDate: Date;
   };
   isSubscribed: boolean;
+  stripeCustomerId?: string;
   stripeSubscriptionId?: string; //stripe
 }
 
@@ -44,6 +45,7 @@ const userSchema = new Schema<UserDocument>(
       type: Boolean,
       default: false,
     },
+    stripeCustomerId: { type: String, unique: true, sparse: true },
     stripeSubscriptionId: {
       type: String,
     },
