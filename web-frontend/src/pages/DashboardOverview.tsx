@@ -26,6 +26,8 @@ export default function DashboardOverview() {
         return <AiSearchContent />;
       case "aiChat":
         return <AiChatContent />;
+      case "shared":
+        return <PlaceholderView title="Shared brain" />;
       default:
         return <DashboardContent />;
     }
@@ -43,7 +45,7 @@ export default function DashboardOverview() {
       <div className="flex-1 flex flex-col min-w-0">
         <Header setIsOpen={setIsSidebarOpen} />
 
-        <main className="flex-1 p-4 md:p-6 overflow-y-auto custom-scrollbar">
+        <main className="flex-1 overflow-y-auto custom-scrollbar">
           <div className="max-w-7xl mx-auto">
             {/* content */}
             {renderContent()}
@@ -57,7 +59,7 @@ export default function DashboardOverview() {
 //  placeholder
 function PlaceholderView({ title }: { title: string }) {
   return (
-    <div className="flex flex-col items-center justify-center h-64 border-2 border-dashed border-gray-200 rounded-3xl bg-white/50">
+    <div className="m-5 flex flex-col items-center justify-center h-64 shadow-sm  rounded-3xl bg-white/50">
       <h2 className="text-xl font-semibold text-gray-400">
         {title} coming soon
       </h2>

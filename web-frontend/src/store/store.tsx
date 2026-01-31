@@ -5,6 +5,7 @@ import { shareRedcuer } from "./features/share";
 import { searchReducer } from "./features/search";
 import { userReducer } from "./features/user";
 import { chatReducer } from "./features/chat";
+import { paymentReducer } from "./features/payment";
 
 export const store = configureStore({
   reducer: {
@@ -14,6 +15,7 @@ export const store = configureStore({
     search: searchReducer,
     user: userReducer,
     chat: chatReducer,
+    payment: paymentReducer,
   },
 });
 

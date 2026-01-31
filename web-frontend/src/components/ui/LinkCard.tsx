@@ -1,12 +1,12 @@
 import { FiExternalLink, FiShare2, FiTrash2 } from "react-icons/fi";
 import { useAppDispatch } from "../../hooks/redux";
-import { deleteContent } from "../../store/features/content";
+import { deleteContent, type Tag } from "../../store/features/content";
 
 interface ILinkCardProps {
   title: string;
   url: string;
   summary: string;
-  tags: string[];
+  tags: Tag[];
   id: string;
   key: string;
   type: string;
@@ -68,12 +68,12 @@ export default function LinkCard({
       </p>
 
       <div className="flex flex-wrap gap-2 pt-4 border-t border-gray-50">
-        {tags.map((tag: string) => (
+        {tags.map((tag) => (
           <span
-            key={tag}
+            key={tag._id}
             className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-sky-100  text-gray-500 rounded-lg group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"
           >
-            #{tag}
+            #{tag.name}
           </span>
         ))}
       </div>

@@ -1,6 +1,7 @@
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import SidebarItem from "./ui/SideBarItem";
 import { AiTwotoneStar } from "react-icons/ai";
+import swoosh1 from "./../assets/images/icons/swoosh2.svg";
 
 import {
   FiMenu,
@@ -14,7 +15,6 @@ import {
   FiSettings,
   FiLogOut,
 } from "react-icons/fi";
-import appLogo from "../assets/images/logo/app_logo2.svg";
 import { BottomItem } from "./ui/BottomSideBarItem";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { logout } from "../store/features/auth";
@@ -78,12 +78,16 @@ export default function SideBar({
               variants={textVariants}
               className="flex items-center overflow-hidden shrink-0"
             >
-              <div className="bg-blue-600 rounded-lg p-1.5 flex items-center justify-center shrink-0">
-                <img src={appLogo} className="h-5 w-5" alt="Logo" />
+              <div className="flex flex-col ">
+                <span className="font-bold text-blue-700 font-sans text-2xl whitespace-nowrap ml-2">
+                  Open Brain
+                </span>
+                <img
+                  src={swoosh1}
+                  alt="swoosh svg"
+                  className="ml-5 w-30 -rotate-2"
+                />
               </div>
-              <span className="font-bold text-blue-700 text-lg whitespace-nowrap ml-2">
-                Open Brain
-              </span>
             </motion.div>
           )}
         </AnimatePresence>
@@ -132,7 +136,7 @@ export default function SideBar({
           icon={<FiLogOut size={18} className="shrink-0" />}
           label="Logout"
           open={isOpen}
-          color="text-red-500 hover:bg-red-100"
+          color="text-red-500 hover:bg-red-50"
           onClick={handleLogout}
         />
       </div>

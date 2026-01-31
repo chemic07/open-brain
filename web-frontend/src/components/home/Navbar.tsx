@@ -1,5 +1,5 @@
 import { useState } from "react";
-import appLogo from "../../assets/images/logo/app_logo2.svg";
+import appLogo from "../../assets/images/icons/swoosh2.svg";
 import Button from "../ui/Button";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -22,11 +22,11 @@ function NavBar() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-transparent">
       <nav className="max-w-7xl mx-auto px-8 py-6 flex items-center justify-between">
         {/* app logo  */}
-        <div className="flex items-center gap-2 text-white font-bold text-xl tracking-tight">
-          <div className="bg-blue-600 rounded-lg p-1.5 flex items-center justify-center">
-            <img src={appLogo} className="h-6 w-6 text-white" />
-          </div>
-          Open Brain
+        <div className="flex flex-col ">
+          <span className="font-bold text-white font-sans text-2xl whitespace-nowrap ml-2">
+            Open Brain
+          </span>
+          <img src={appLogo} alt="swoosh svg" className="ml-5 w-30 -rotate-2" />
         </div>
 
         {/* link to sectin */}

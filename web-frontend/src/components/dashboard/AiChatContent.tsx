@@ -3,6 +3,7 @@ import ReactMarkdown from "react-markdown";
 import { FiSend, FiExternalLink, FiTrash2 } from "react-icons/fi";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import magicIcon from "../../assets/images/icons/magic_icon.svg";
+import swoosh from "../../assets/images/icons/swoosh.svg";
 import {
   sendMessage,
   addUserMessage,
@@ -71,13 +72,13 @@ export default function AiChatContent() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl  font-bold text-gray-800">
-                Chat with Your Brain
-              </h1>
+                Chat with Your <span className="text-blue-500">Brain.</span>
+              </h1>{" "}
             </div>
             {messages.length > 0 && (
               <button
                 onClick={handleClear}
-                className="p-2 text-gray-600 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+                className="p-2 text-gray-600 hover:text-red-600 rounded-lg hover:bg-black/5 transition-colors"
                 title="Clear conversation"
               >
                 <FiTrash2 size={20} />

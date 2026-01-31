@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
+    "@stripe/stripe-js": "^8.7.0",
     "@tailwindcss/vite": "^4.1.18",
     "axios": "^1.13.2",
     "clsx": "^2.1.1",

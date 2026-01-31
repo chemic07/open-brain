@@ -54,7 +54,7 @@ export default function SearchResultCard(result: ISearchResultCard) {
           </span>
         ))}
         {result.content.tags.length > 3 && (
-          <span className="px-2.5 py-1 bg-gray-100 text-gray-600 text-xs font-medium rounded-md">
+          <span className="px-2.5 py-1 bg-black/10 text-gray-600 text-xs font-medium rounded-md">
             +{result.content.tags.length - 3}
           </span>
         )}

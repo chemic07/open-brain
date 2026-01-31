@@ -11,6 +11,8 @@ import { useAppDispatch } from "./hooks/redux";
 import { useEffect } from "react";
 import { loadUser } from "./store/features/auth";
 import { getToken } from "./utils/LocalStorage";
+import SuccessPage from "./pages/SuccessPage";
+import CancelPage from "./pages/CancelPage";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +35,14 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <DashboardRoot />,
     children: [{ index: true, element: <DashboardOverview /> }],
+  },
+  {
+    path: "/payment/success",
+    element: <SuccessPage />,
+  },
+  {
+    path: "/payment/cancel",
+    element: <CancelPage />,
   },
 ]);
 
