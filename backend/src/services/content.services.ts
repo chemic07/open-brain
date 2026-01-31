@@ -19,7 +19,7 @@ export async function addContentService(data: ContentInput, userId: string) {
   if (user.plan === PlanType.FREE) {
     const currentCount = await Content.countDocuments({ userId });
     //limit 50 to free user
-    if (currentCount >= 50) {
+    if (currentCount >= parseInt(process.env.ADD_LINK_LIMIT!)) {
       throw new AppError(
         "Limit reached: Free plan is restricted to 50 links. Please upgrade to Plus.",
         403,

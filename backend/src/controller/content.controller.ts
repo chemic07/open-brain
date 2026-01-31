@@ -15,8 +15,10 @@ export async function addContent(
     const userId = req.userId!;
     const data: ContentInput = req.body;
 
-    const content = await addContentService(data, userId);
+    let content = await addContentService(data, userId);
+    content = await content.populate([{ path: "link" }, { path: "tags" }]);
 
+    console.log(content);
     return res.status(201).json(content);
   } catch (err: any) {
     next(err);

@@ -2,6 +2,8 @@ import type { NextFunction, Request, Response } from "express";
 import { AIService } from "../../worker/services/ai.services";
 import { Embedding } from "../../shared/models/embedding.model";
 import { Types } from "mongoose";
+import { UserModel } from "../models/user.model";
+import { readJsonConfigFile } from "typescript";
 
 export async function searchContent(
   req: Request,
@@ -55,6 +57,14 @@ export async function searchContent(
       },
       { $unwind: "$content.link" },
       {
+        $lookup: {
+          from: "tags",
+          localField: "content.tags",
+          foreignField: "_id",
+          as: "content.tags",
+        },
+      },
+      {
         $project: {
           _id: 0,
           contentId: "$_id",
@@ -70,6 +80,7 @@ export async function searchContent(
       (result) => result.similarity > parseFloat(process.env.FILTER_THRESHOLD!),
     );
 
+    console.log(finalResult);
     res.json({
       query,
       total: finalResult.length,
@@ -147,8 +158,6 @@ export async function chatWithAI(
       },
     ]);
 
-    console.log(relevantContent);
-
     //  filter by  threshold
     // const threshold = parseFloat(process.env.FILTER_THRESHOLD!);
     const filteredContent = relevantContent.filter(
@@ -170,10 +179,10 @@ export async function chatWithAI(
       .map(
         (item: any, index: number) =>
           `[Source ${index + 1}]
-Title: ${item.title}
-URL: ${item.url}
-Content: ${item.relevantText || item.description || ""}
----`,
+        Title: ${item.title}
+        URL: ${item.url}
+        Content: ${item.relevantText || item.description || ""}
+        ---`,
       )
       .join("\n\n");
 
@@ -184,6 +193,14 @@ Content: ${item.relevantText || item.description || ""}
       message,
       context,
       conversationHistory,
+    );
+
+    // -token on each req
+    const TOKEN_COST = -300;
+    const updatedUser = await UserModel.findByIdAndUpdate(
+      userId,
+      { $inc: { "tokens.totalRemaining": TOKEN_COST } },
+      { new: true },
     );
 
     // return
