@@ -2,6 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { Content, AddContentPayload } from "./contentTypes";
 import api from "../../../services/api";
 import axios from "axios";
+import { data } from "react-router-dom";
 
 // all content
 export const fetchAllContent = createAsyncThunk<
@@ -38,6 +39,32 @@ export const addContent = createAsyncThunk<
       );
     }
     return rejectWithValue("Failed to add content");
+  }
+});
+
+//search content
+
+export const searchContent = createAsyncThunk<
+  Content[],
+  string,
+  { rejectValue: string }
+>("/content/search", async (query, { rejectWithValue }) => {
+  try {
+    const res = await api.get<Content[]>("/content/search", {
+      headers: {
+        q: query,
+      },
+    });
+
+    console.log(res.data);
+    return res.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      return rejectWithValue(
+        error.response?.data.error || "Failed to search content",
+      );
+    }
+    return rejectWithValue("Failed to search content");
   }
 });
 

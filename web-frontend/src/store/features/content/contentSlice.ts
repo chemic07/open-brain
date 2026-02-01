@@ -1,6 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { ContentState } from "./contentTypes";
-import { fetchAllContent, addContent, deleteContent } from "./contentThunks";
+import {
+  fetchAllContent,
+  addContent,
+  deleteContent,
+  searchContent,
+} from "./contentThunks";
 
 const initialState: ContentState = {
   contents: [],
@@ -21,6 +26,10 @@ const contentSlice = createSlice({
     },
     clearCurrentContent: (state) => {
       state.currentContent = null;
+    },
+
+    clearSearch: (state) => {
+      state.contents = [];
     },
   },
   extraReducers: (builder) => {
@@ -51,6 +60,21 @@ const contentSlice = createSlice({
       .addCase(addContent.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Failed to add content";
+      })
+
+      .addCase(searchContent.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(searchContent.fulfilled, (state, action) => {
+        state.loading = false;
+        state.error = null;
+        state.contents = action.payload;
+      })
+
+      .addCase(searchContent.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Failed to search content";
       })
 
       // Delete content

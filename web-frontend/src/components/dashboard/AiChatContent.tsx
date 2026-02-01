@@ -3,7 +3,6 @@ import ReactMarkdown from "react-markdown";
 import { FiSend, FiExternalLink, FiTrash2 } from "react-icons/fi";
 import { useAppDispatch, useAppSelector } from "../../hooks/redux";
 import magicIcon from "../../assets/images/icons/magic_icon.svg";
-import swoosh from "../../assets/images/icons/swoosh.svg";
 import {
   sendMessage,
   addUserMessage,
@@ -114,6 +113,8 @@ export default function AiChatContent() {
               </div>
             </div>
           )}
+
+          {/* <UpgradeModal onClose={() => {}} /> */}
 
           {/* msges */}
           {messages.map((msg, index) => (

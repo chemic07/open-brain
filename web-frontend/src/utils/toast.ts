@@ -1,24 +1,26 @@
 import { toast } from "sonner";
 
-// Use 'type' for the fixed set of strings
 type ToastType = "success" | "error" | "warning" | "info" | "loading";
 
 interface ToastOptions {
   description?: string;
   duration?: number;
   id?: string | number;
+  action?: {
+    label: string;
+    onClick: () => void;
+  };
 }
 
-// Fixed interface name and property types
 interface IShowToast {
-  type: ToastType; // Changed from string to ToastType for better safety
+  type: ToastType;
   message: string;
   options?: ToastOptions;
 }
 
 export const showToast = ({ type, message, options }: IShowToast) => {
-  const { description, duration = 3000, id } = options || {};
-  const config = { description, duration, id };
+  const { description, duration = 3000, id, action } = options || {};
+  const config = { description, duration, id, action };
 
   switch (type) {
     case "success":

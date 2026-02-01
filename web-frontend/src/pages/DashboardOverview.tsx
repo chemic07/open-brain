@@ -4,11 +4,20 @@ import Header from "../components/dashboard/Header";
 import DashboardContent from "../components/dashboard/DashboardContent";
 import AiSearchContent from "../components/dashboard/AiSearchContent";
 import AiChatContent from "../components/dashboard/AiChatContent";
+import SettingsContent from "../components/dashboard/SettingsContent";
+import { useSearchParams } from "react-router-dom";
+import SimpleSearchContent from "../components/dashboard/SimpleSearchContent";
 
 export default function DashboardOverview() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [activeTab, setActiveTab] = useState("dashboard");
+  // const [activeTab, setActiveTab] = useState("dashboard");
+  const [searchParams, setSearchParams] = useSearchParams();
 
+  const activeTab = searchParams.get("tab") || "dashboard";
+
+  const setActiveTab = (tabId: string) => {
+    setSearchParams({ tab: tabId });
+  };
   // this decides what to show in the content
   const renderContent = () => {
     switch (activeTab) {
@@ -28,6 +37,10 @@ export default function DashboardOverview() {
         return <AiChatContent />;
       case "shared":
         return <PlaceholderView title="Shared brain" />;
+      case "settings":
+        return <SettingsContent></SettingsContent>;
+      case "search":
+        return <SimpleSearchContent></SimpleSearchContent>;
       default:
         return <DashboardContent />;
     }

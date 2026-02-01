@@ -11,7 +11,7 @@ export default function SearchResultCard(result: ISearchResultCard) {
   return (
     <div
       key={result.content._id}
-      className="bg-black/5 rounded-xl border border-gray-300 p-5 hover:shadow-lg transition-all duration-200 group relative"
+      className="bg-gray-50 rounded-xl border border-gray-300 p-5 hover:shadow-lg transition-all duration-200 group relative"
     >
       {/* match  */}
       <div className="absolute top-3 right-3">
@@ -30,9 +30,9 @@ export default function SearchResultCard(result: ISearchResultCard) {
         {result.content.title}
       </h3>
       <div className="flex flex-row gap-1.5 mb-2">
-        <FiExternalLink size={25} />
+        <FiExternalLink size={20} />
         <a
-          className="text-blue-200 line-clamp-1"
+          className="text-blue-600 line-clamp-1"
           href={result.content.link.url}
         >
           {result.content.link.url}

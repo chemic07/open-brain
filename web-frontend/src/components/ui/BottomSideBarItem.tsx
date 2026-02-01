@@ -1,35 +1,40 @@
+// components/ui/BottomSideBarItem.tsx
 import { AnimatePresence, motion } from "framer-motion";
-import type { ReactNode } from "react";
+import { type ReactElement } from "react";
 
 interface BottomItemProps {
-  icon: ReactNode;
+  icon: ReactElement;
   label: string;
   open: boolean;
   color?: string;
-  onClick?: () => void;
+  onClick: () => void;
+  isActive?: boolean;
 }
 
 export function BottomItem({
-  onClick,
   icon,
   label,
   open,
-  color = "text-gray-600 hover:bg-sky-50",
+  color = "text-gray-600 hover:bg-blue-50",
+  onClick,
+  isActive = false,
 }: BottomItemProps) {
   return (
     <button
       onClick={onClick}
-      className={`w-full flex items-center px-3 py-2.5 text-sm font-medium rounded-xl transition-colors overflow-hidden ${color}`}
+      className={`flex items-center w-full px-3 py-2 rounded-lg transition-colors ${
+        isActive ? "bg-blue-50 text-blue-600" : color
+      }`}
     >
-      <div className="flex items-center min-w-5 justify-center">{icon}</div>
+      <span className="shrink-0">{icon}</span>
       <AnimatePresence mode="wait">
         {open && (
           <motion.span
-            initial={{ opacity: 0, width: 0, marginLeft: 0 }}
-            animate={{ opacity: 1, width: "auto", marginLeft: 12 }}
-            exit={{ opacity: 0, width: 0, marginLeft: 0 }}
+            initial={{ opacity: 0, width: 0 }}
+            animate={{ opacity: 1, width: "auto" }}
+            exit={{ opacity: 0, width: 0 }}
             transition={{ duration: 0.2 }}
-            className="whitespace-nowrap overflow-hidden font-medium"
+            className="ml-3 text-sm font-medium whitespace-nowrap overflow-hidden"
           >
             {label}
           </motion.span>

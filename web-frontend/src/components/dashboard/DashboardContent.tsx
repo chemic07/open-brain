@@ -22,7 +22,7 @@ export default function DashboardContent() {
   const recentLinks = contents.slice(0, 6);
 
   return (
-    <main className="px-5 py-6">
+    <main className="px-2 md:px-5 py-2.5 md:py-6">
       <div className="max-w-7xl mx-auto space-y-10">
         {/* top */}
         <div className="flex flex-wrap items-center justify-between gap-4">
@@ -37,7 +37,7 @@ export default function DashboardContent() {
           </div>
 
           <div className="flex items-center gap-2">
-            <div className="flex items-center gap-3 bg-white px-4 py-2 rounded-xl border border-gray-200 shadow-sm">
+            <div className="flex items-center gap-3 bg-white px-4 py-2 rounded md:rounded-xl border border-gray-200 shadow-sm">
               <FiCalendar className="text-gray-400" />
               <span className="text-sm font-medium text-gray-700">
                 Jan 1, 2026 - Feb 1, 2026
@@ -86,7 +86,10 @@ export default function DashboardContent() {
         <div className="space-y-6">
           <div className="flex items-center justify-between border-b border-gray-200 pb-4">
             <h2 className="text-xl font-bold text-gray-900">Recent Links</h2>
-            <button className="text-sm font-semibold text-blue-600 hover:underline">
+            <button
+              onClick={() => {}}
+              className="text-sm font-semibold text-blue-600 hover:underline"
+            >
               View all
             </button>
           </div>
@@ -97,7 +100,7 @@ export default function DashboardContent() {
               {[...Array(6)].map((_, i) => (
                 <div
                   key={i}
-                  className="h-64 bg-black/20 rounded-xl animate-pulse"
+                  className="h-64 bg-white rounded-xl animate-pulse"
                 />
               ))}
             </div>

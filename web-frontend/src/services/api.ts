@@ -1,4 +1,5 @@
 import axios from "axios";
+import { showToast } from "../utils/toast";
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_END_POINT,
@@ -22,8 +23,24 @@ api.interceptors.response.use(
   (error) => {
     if (error.response && error.response.status === 401) {
       localStorage.removeItem("token");
-      window.location.href = "/auth/signin"; // Force redirect to login
+      window.location.href = "/auth/signin";
     }
+
+    //show not enough token toast
+    if (error.response && error.response.status === 403) {
+      const errorMessage =
+        error.response.data?.message || "Insufficient tokens!";
+
+      showToast({
+        type: "error",
+        message: "Insufficient tokens!",
+        options: {
+          duration: 5000,
+          description: errorMessage,
+        },
+      });
+    }
+
     return Promise.reject(error);
   },
 );

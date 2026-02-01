@@ -13,6 +13,7 @@ import { loadUser } from "./store/features/auth";
 import { getToken } from "./utils/LocalStorage";
 import SuccessPage from "./pages/SuccessPage";
 import CancelPage from "./pages/CancelPage";
+import UpgradePage from "./pages/UpgradePage";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,12 @@ const router = createBrowserRouter([
     element: <DashboardRoot />,
     children: [{ index: true, element: <DashboardOverview /> }],
   },
+
+  {
+    path: "/upgrade",
+    element: <UpgradePage />,
+  },
+
   {
     path: "/payment/success",
     element: <SuccessPage />,

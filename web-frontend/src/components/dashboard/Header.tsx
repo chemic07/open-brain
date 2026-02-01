@@ -5,12 +5,14 @@ import { generateShareLink } from "../../store/features/share/shareThunk";
 import SearachBar from "../ui/SearchBar";
 import ProfileSection from "../ui/ProfileSection";
 import ShareModal from "../ui/ShareModal";
+import { useSearchParams } from "react-router-dom";
 
 interface IHeaderProps {
   setIsOpen: (open: boolean) => void;
 }
 
 export default function Header({ setIsOpen }: IHeaderProps) {
+  const [searchParams, setSearchParams] = useSearchParams();
   const dispatch = useAppDispatch();
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const { shareLink, loading } = useAppSelector((state) => state.share);
@@ -26,6 +28,11 @@ export default function Header({ setIsOpen }: IHeaderProps) {
     }
   };
 
+  const handleSearch = (query: string) => {
+    // When searching, switch the tab to 'search' and keep the query
+    setSearchParams({ tab: "search", q: query });
+  };
+
   return (
     <>
       <header className="h-16 bg-white border-b border-gray-200 flex items-center px-4 md:px-6 sticky top-0 z-30 w-full">
@@ -38,7 +45,12 @@ export default function Header({ setIsOpen }: IHeaderProps) {
           <FiMenu size={20} />
         </button>
 
-        <SearachBar variant="secondary" size="sm" text="search anything..." />
+        <SearachBar
+          variant="secondary"
+          size="sm"
+          text="search anything..."
+          onSearch={handleSearch}
+        />
 
         {/* right side */}
         <div className="ml-auto flex items-center gap-2 md:gap-4">

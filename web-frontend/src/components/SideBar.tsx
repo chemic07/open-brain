@@ -46,6 +46,13 @@ export default function SideBar({
     }
   }
 
+  function handleSettingsClick() {
+    setActive("settings");
+    if (window.innerWidth < 768) {
+      setIsOpen(false);
+    }
+  }
+
   const mobileVariants: Variants = {
     open: { x: 0, transition: { type: "spring", stiffness: 300, damping: 30 } },
     closed: {
@@ -131,6 +138,8 @@ export default function SideBar({
           icon={<FiSettings size={18} className="shrink-0" />}
           label="Settings"
           open={isOpen}
+          onClick={handleSettingsClick}
+          isActive={active === "settings"}
         />
         <BottomItem
           icon={<FiLogOut size={18} className="shrink-0" />}
