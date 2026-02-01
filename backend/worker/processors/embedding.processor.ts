@@ -45,7 +45,7 @@ export async function processEmbedding(job: Job) {
 
     if (scrapedData.content.length > 200) {
       try {
-        const contentForAI = scrapedData.content.substring(0, 1000);
+        const contentForAI = scrapedData.content.substring(0, 5000);
         console.log("content sent to Ai + " + contentForAI);
         summary = await AIService.generateSummary(contentForAI);
         await Link.findByIdAndUpdate(content.link, { description: summary });

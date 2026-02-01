@@ -1,8 +1,14 @@
 import z from "zod";
 
 export const changePasswordSchema = z.object({
-  oldPassword: z.string().min(6).max(15),
-  newPassword: z.string().min(6).max(15),
+  oldPassword: z
+    .string()
+    .min(6, "Password should be greater than 6 character")
+    .max(15, "Password should be less than 15 character"),
+  newPassword: z
+    .string()
+    .min(6, "Password should be greater than 6 character")
+    .max(15, "Password should be less than 15 character"),
 });
 
 export const updateUserProfileSchema = z.object({

@@ -3,8 +3,8 @@ import { AIService } from "../../worker/services/ai.services";
 import { Embedding } from "../../shared/models/embedding.model";
 import { Types } from "mongoose";
 import { UserModel } from "../models/user.model";
-import { readJsonConfigFile } from "typescript";
 
+//#region  semantic search
 export async function searchContent(
   req: Request,
   res: Response,
@@ -91,6 +91,8 @@ export async function searchContent(
   }
 }
 
+//#endregion
+//#region chatwithAI
 export async function chatWithAI(
   req: Request,
   res: Response,
@@ -219,3 +221,5 @@ export async function chatWithAI(
     next(error);
   }
 }
+
+//#endregion

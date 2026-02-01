@@ -3,6 +3,7 @@ import {
   addContentService,
   deleteContentService,
   getAllContentService,
+  searchContentByWordService,
 } from "../services/content.services";
 import type { ContentInput } from "../validation/content.schema";
 
@@ -37,6 +38,21 @@ export async function getAllContent(
 
     return res.status(200).json(contents);
   } catch (error: any) {
+    next(error);
+  }
+}
+
+export async function searchContentByWord(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const query = req.headers.q as string;
+
+    const results = await searchContentByWordService(req.userId!, query);
+    return res.status(200).json(results);
+  } catch (error) {
     next(error);
   }
 }

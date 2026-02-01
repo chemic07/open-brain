@@ -39,7 +39,7 @@ export class AIService {
   static async generateSummary(text: string): Promise<string> {
     try {
       const prompt = `You are a helpful assistant that creates concise, informative summaries. 
-      Keep summaries under 20 words and focus on the main points.
+      Keep summaries under 200 words and focus on the main points.
       
       Summarize this content:
       ${text.slice(0, 8000)}`;

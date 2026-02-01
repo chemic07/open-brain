@@ -16,12 +16,16 @@ export async function addContentService(data: ContentInput, userId: string) {
   const user = await UserModel.findById(userId);
   if (!user) throw new AppError("User not found", 404);
 
+  console.log("user plan " + user.plan);
+  console.log("user limit " + process.env.ADD_LINK_LIMIT!);
   if (user.plan === PlanType.FREE) {
     const currentCount = await Content.countDocuments({ userId });
     //limit 50 to free user
-    if (currentCount >= parseInt(process.env.ADD_LINK_LIMIT!)) {
+    const limit = parseInt(process.env.ADD_LINK_LIMIT ?? "5");
+
+    if (currentCount >= limit) {
       throw new AppError(
-        "Limit reached: Free plan is restricted to 50 links. Please upgrade to Plus.",
+        `Limit reached: Free plan is restricted to ${limit} links. Please upgrade to Plus.`,
         403,
       );
     }
@@ -78,6 +82,39 @@ export async function addContentService(data: ContentInput, userId: string) {
   return content;
 }
 
+//#endregion
+
+//#region searchContentByword
+
+export async function searchContentByWordService(
+  userId: string,
+  query: string,
+) {
+  try {
+    // build search query
+    const searchRegex = new RegExp(query, "i");
+
+    const results = await Content.find({
+      userId,
+      $or: [
+        { title: { $regex: searchRegex } },
+        { "link.url": { $regex: searchRegex } },
+        { "link.title": { $regex: searchRegex } },
+        // { "link.description": { $regex: searchRegex } },
+        // { "tags.name": { $regex: searchRegex } },
+      ],
+    })
+      .populate("link")
+      .populate("tags")
+      .sort({ createdAt: -1 })
+      .limit(50);
+
+    return results;
+  } catch (error) {
+    console.error("Word search error:", error);
+    throw new Error("Failed to search content");
+  }
+}
 //#endregion
 
 //#region fetch all
