@@ -9,15 +9,22 @@ export default function SidebarItem({ item, active, setActive, open }: any) {
       {isActive && (
         <motion.div
           layoutId="sidebar-active"
-          className="absolute inset-0 rounded-lg bg-sky-100"
+          className="absolute inset-0 rounded-lg bg-sky-100 dark:bg-[#1f3760]"
           transition={{ type: "spring", stiffness: 400, damping: 30 }}
         />
       )}
 
       <button
-        onClick={() => setActive(item.id)}
+        onClick={() => {
+          setActive(item.id);
+        }}
         className={`relative z-10 w-full flex items-center justify-between px-3 py-2 rounded-lg
-        ${isActive ? "text-blue-700" : "text-gray-600 hover:bg-sky-50"}`}
+  ${
+    isActive
+      ? "text-blue-700 dark:text-white"
+      : "text-gray-600 dark:text-[#c4c7c5]"
+  }
+`}
       >
         <div className="flex items-center gap-3">
           <Icon size={18} />

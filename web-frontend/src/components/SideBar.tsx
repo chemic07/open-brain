@@ -1,6 +1,6 @@
 import { motion, AnimatePresence, type Variants } from "framer-motion";
 import SidebarItem from "./ui/SideBarItem";
-import { AiTwotoneStar } from "react-icons/ai";
+import { AiOutlineStar } from "react-icons/ai";
 import swoosh1 from "./../assets/images/icons/swoosh2.svg";
 
 import {
@@ -68,7 +68,7 @@ export default function SideBar({
   };
 
   const Content = (
-    <div className="flex flex-col h-full overflow-x-hidden bg-white">
+    <div className="flex flex-col h-full overflow-x-hidden bg-white dark:bg-[#131314]">
       {/* top */}
       <div
         className={`flex items-center px-4 py-4 overflow-hidden ${
@@ -86,13 +86,13 @@ export default function SideBar({
               className="flex items-center overflow-hidden shrink-0"
             >
               <div className="flex flex-col ">
-                <span className="font-bold text-blue-700 font-sans text-2xl whitespace-nowrap ml-2">
+                <span className="font-bold text-blue-700 dark:text-white font-sans text-xl md:text-2xl  whitespace-nowrap md-0 md:ml-2">
                   Open Brain
                 </span>
                 <img
                   src={swoosh1}
                   alt="swoosh svg"
-                  className="ml-5 w-30 -rotate-2"
+                  className="ml-1 md:ml-5 w-25 md:w-30 -rotate-2"
                 />
               </div>
             </motion.div>
@@ -101,7 +101,7 @@ export default function SideBar({
 
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="p-2 rounded hover:bg-sky-100 shrink-0 transition-colors z-10"
+          className="p-2 rounded-lg text-balck dark:text-white hover:bg-sky-100 dark:bg-white/10 dark:hover:bg-white/10 shrink-0 transition-colors z-10"
         >
           <FiMenu size={20} />
         </button>
@@ -119,7 +119,7 @@ export default function SideBar({
           />
         ))}
 
-        <div className="my-4 border-t border-black/15 mx-3 shrink-0" />
+        <div className="my-4 border-t border-black/15 dark:border-white/15 mx-3 shrink-0" />
 
         {brainItems.map((item) => (
           <SidebarItem
@@ -133,7 +133,7 @@ export default function SideBar({
       </div>
 
       {/* bottom */}
-      <div className="mt-auto px-2  space-y-1 border-t border-gray-50 pt-4 overflow-hidden shrink-0">
+      <div className="mt-auto px-2  space-y-1 border-t border-gray-50 dark:border-gray-100 pt-4 overflow-hidden shrink-0">
         <BottomItem
           icon={<FiSettings size={18} className="shrink-0" />}
           label="Settings"
@@ -145,7 +145,7 @@ export default function SideBar({
           icon={<FiLogOut size={18} className="shrink-0" />}
           label="Logout"
           open={isOpen}
-          color="text-red-500 hover:bg-red-50"
+          color="text-red-500 darl:text-white/70 hover:bg-red-100  dark:hover:bg-[#212121] mb-2"
           onClick={handleLogout}
         />
       </div>
@@ -172,7 +172,7 @@ export default function SideBar({
         initial={false}
         animate={{ width: isOpen ? 240 : 60 }}
         transition={{ type: "spring", stiffness: 300, damping: 30 }}
-        className="hidden md:flex flex-col h-screen bg-white border-r border-gray-200 sticky top-0 z-30 overflow-hidden"
+        className="hidden md:flex flex-col h-screen bg-white border-r border-gray-200 dark:border-gray-100 sticky top-0 z-30 overflow-hidden"
       >
         {Content}
       </motion.aside>
@@ -216,7 +216,7 @@ const brainItems = [
   {
     id: "aiChat",
     label: "AI Chat",
-    icon: AiTwotoneStar,
+    icon: AiOutlineStar,
   },
   { id: "shared", label: "Shared Brains", icon: FiUsers },
 ];

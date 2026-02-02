@@ -41,7 +41,7 @@ export default function HeroSection() {
               <path
                 d="M 50 0 L 0 0 0 50"
                 fill="none"
-                stroke="rgba(139, 92, 246, 0.8)"
+                stroke="rgba(196, 199, 197, 0.3)"
                 strokeWidth="1"
               />
             </pattern>

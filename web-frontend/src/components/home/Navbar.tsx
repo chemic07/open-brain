@@ -20,13 +20,17 @@ function NavBar() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-transparent">
-      <nav className="max-w-7xl mx-auto px-8 py-6 flex items-center justify-between">
+      <nav className="max-w-7xl mx-auto px-2 md:px-8 py-6 flex items-center justify-between">
         {/* app logo  */}
         <div className="flex flex-col ">
-          <span className="font-bold text-white font-sans text-2xl whitespace-nowrap ml-2">
+          <span className="font-bold text-white font-sans text-xl md:text-2xl whitespace-nowrap ml-2">
             Open Brain
           </span>
-          <img src={appLogo} alt="swoosh svg" className="ml-5 w-30 -rotate-2" />
+          <img
+            src={appLogo}
+            alt="swoosh svg"
+            className="ml-5 w-25 md:w-30 -rotate-2"
+          />
         </div>
 
         {/* link to sectin */}

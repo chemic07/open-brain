@@ -30,7 +30,9 @@ export default function SimpleSearchContent() {
 
   return (
     <main className="p-6">
-      <h1 className="text-xl font-bold mb-4">Results for: "{query}"</h1>
+      <h1 className="text-xl text-black/80 dark:text-white/90 font-bold mb-4">
+        Results for: "{query}"
+      </h1>
 
       {loading && <p>Searching...</p>}
 

@@ -35,7 +35,7 @@ export default function InputField({
       {label && (
         <label
           className={`text-sm font-medium ${
-            isDark ? "text-white" : "text-gray-700"
+            isDark ? "text-white" : "text-gray-700 dark:text-white"
           }`}
         >
           {label} {required && <span className="text-red-500">*</span>}
@@ -49,17 +49,15 @@ export default function InputField({
             error
               ? "border-red-300 bg-red-50"
               : isDark
-                ? "border-gray-700 bg-black-100 focus-within:border-gray-500"
-                : "border-gray-300 bg-white focus-within:border-blue-500 focus-within:ring-2 focus-within:ring-blue-500/20"
+                ? "border-white/20  bg-black-100 focus-within:border-white/40"
+                : "border-gray-300 dark:border-white/10 bg-white dark:bg-[#212121] focus-within:border-blue-500 dark:focus-within:border-white/30 focus-within:ring-2 focus-within:ring-blue-500/20 dark:focus-within:ring-transparent"
           }
           ${disabled ? "opacity-60 cursor-not-allowed" : ""}
         `}
       >
         {icon && (
           <span
-            className={`flex-shrink-0 ${
-              isDark ? "text-gray-400" : "text-gray-500"
-            }`}
+            className={`shrink-0 ${isDark ? "text-gray-400" : "text-gray-500 "}`}
           >
             {icon}
           </span>
@@ -70,7 +68,7 @@ export default function InputField({
           disabled={disabled}
           required={required}
           className={`w-full outline-none bg-transparent
-            ${isDark ? "text-white placeholder:text-gray-500" : "text-gray-900 placeholder:text-gray-400"}
+            ${isDark ? "text-white placeholder:text-gray-500" : "text-gray-900 placeholder:text-gray-400 dark:text-white"}
             ${disabled ? "cursor-not-allowed" : ""}
             ${inputClassName}
           `}

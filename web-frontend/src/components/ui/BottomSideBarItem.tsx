@@ -15,7 +15,7 @@ export function BottomItem({
   icon,
   label,
   open,
-  color = "text-gray-600 hover:bg-blue-50",
+  color = "text-gray-600 dark:text-white/80 hover:bg-blue-50 dark:hover:bg-[#212121]",
   onClick,
   isActive = false,
 }: BottomItemProps) {
@@ -23,7 +23,9 @@ export function BottomItem({
     <button
       onClick={onClick}
       className={`flex items-center w-full px-3 py-2 rounded-lg transition-colors ${
-        isActive ? "bg-blue-50 text-blue-600" : color
+        isActive
+          ? "bg-blue-50 text-gra-500 dark:text-white dark:bg-[#1f3760]"
+          : color
       }`}
     >
       <span className="shrink-0">{icon}</span>

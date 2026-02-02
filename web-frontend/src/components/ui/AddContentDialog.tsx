@@ -84,19 +84,21 @@ export default function AddContentDialog({ onClose }: AddContentDialogProps) {
 
   return (
     <div
-      className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4"
+      className="fixed inset-0 bg-black/50 dark:bg-black/70 flex items-center justify-center z-50 p-4"
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-xl max-w-md w-full p-6 shadow-xl"
+        className="bg-white dark:bg-[#181818] rounded-xl max-w-md w-full p-6 shadow-xl border border-gray-200 dark:border-white/10"
         onClick={(e) => e.stopPropagation()}
       >
         {/* header */}
         <div className="flex items-center justify-between mb-6">
-          <h2 className="text-xl font-bold text-gray-900">Add New Link</h2>
+          <h2 className="text-xl font-bold text-gray-900 dark:text-white/90">
+            Add New Link
+          </h2>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-black/20 rounded-lg transition-colors"
+            className="p-2 hover:bg-black/20 dark:hover:bg-white/10 rounded-lg transition-colors text-gray-900 dark:text-white/90"
           >
             <FiX size={20} />
           </button>
@@ -139,7 +141,7 @@ export default function AddContentDialog({ onClose }: AddContentDialogProps) {
 
           {/*type  */}
           <div>
-            <label className="text-sm font-medium text-gray-700 mb-2 block">
+            <label className="text-sm font-medium text-gray-700 dark:text-white/90 mb-2 block">
               Type
             </label>
             <select
@@ -150,7 +152,7 @@ export default function AddContentDialog({ onClose }: AddContentDialogProps) {
                   type: e.target.value as ContentType,
                 })
               }
-              className="w-full px-3 py-2 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none bg-white"
+              className="w-full px-3 py-2 border-2 border-gray-300 dark:border-white/10 rounded-lg focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400/10 focus:border-blue-500 dark:focus:border-blue-500 focus:outline-none bg-white dark:bg-white/5 text-gray-900 dark:text-white/90"
             >
               <option value="article">Article</option>
               <option value="video">Video</option>
@@ -175,7 +177,10 @@ export default function AddContentDialog({ onClose }: AddContentDialogProps) {
           />
 
           {error && (
-            <div className="text-red-600 font-heading text-sm"> {error}</div>
+            <div className="text-red-600 dark:text-red-400 font-heading text-sm">
+              {" "}
+              {error}
+            </div>
           )}
 
           {/* add / close */}
@@ -183,7 +188,7 @@ export default function AddContentDialog({ onClose }: AddContentDialogProps) {
             <Button
               type="button"
               text="Cancel"
-              variant="secondary"
+              variant={localStorage.theme === "dark" ? "glass" : "outline"}
               onClick={onClose}
               className="flex-1"
               disabled={loading}
@@ -191,7 +196,7 @@ export default function AddContentDialog({ onClose }: AddContentDialogProps) {
             <Button
               type="submit"
               text={loading ? "Adding..." : "Add Link"}
-              variant="outline"
+              variant={localStorage.theme === "light" ? "secondary" : "primary"}
               className="flex-1"
               disabled={loading}
             />

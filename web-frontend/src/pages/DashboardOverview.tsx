@@ -17,6 +17,10 @@ export default function DashboardOverview() {
 
   const setActiveTab = (tabId: string) => {
     setSearchParams({ tab: tabId });
+
+    // if (window.innerWidth < 768) {
+    //   setIsSidebarOpen(false);
+    // }
   };
   // this decides what to show in the content
   const renderContent = () => {
@@ -47,7 +51,7 @@ export default function DashboardOverview() {
   };
 
   return (
-    <div className="h-screen flex bg-gray-50 overflow-hidden">
+    <div className="h-screen flex bg-linear-to-b from-gray-50 to-white dark:bg-linear-to-b dark:from-[#212121]  dark:to-black overflow-hidden">
       <SideBar
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}
@@ -72,8 +76,8 @@ export default function DashboardOverview() {
 //  placeholder
 function PlaceholderView({ title }: { title: string }) {
   return (
-    <div className="m-5 flex flex-col items-center justify-center h-64 shadow-sm  rounded-3xl bg-white/50">
-      <h2 className="text-xl font-semibold text-gray-400">
+    <div className="m-5 flex flex-col items-center justify-center h-64 shadow-sm font-sans rounded-xl md:rounded-3xl bg-white/50 dark:bg-white/5">
+      <h2 className="text-xl font-medium text-gray-400 dark:text-white">
         {title} coming soon
       </h2>
     </div>

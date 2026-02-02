@@ -31,10 +31,10 @@ interface IButtonProps {
 
 const VARIANT_STYLES: Record<Variant, string> = {
   primary:
-    "bg-white text-slate-950 hover:bg-slate-100 shadow-lg shadow-white/5",
+    "bg-white text-slate-950 rounded-lg md:rounded-xl hover:bg-slate-100 shadow-lg shadow-white/5",
 
   secondary:
-    "flex items-center gap-1 md:gap-2 bg-blue-600 text-white rounded md:rounded-xl text-sm font-semibold hover:bg-blue-700 shadow-lg shadow-blue-100 transition-all",
+    "flex items-center gap-1 md:gap-2 bg-blue-600 text-white rounded-lg md:rounded-xl text-sm font-semibold hover:bg-blue-700 shadow-lg shadow-blue-100/30 transition-all",
   glass:
     "bg-white/10 backdrop-blur-md border border-white/20 text-white hover:bg-white/20",
 
@@ -71,7 +71,7 @@ export default function Button({
       aria-busy={isLoading}
       className={cn(
         "flex items-center justify-center gap-2 rounded-full font-semibold transition-all duration-200 active:scale-95",
-        "disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 hover:cursor-pointer",
+        "disabled:opacity-50 disabled:cursor-not-allowed disabled:active:scale-100 hover:cursor-pointer ",
         VARIANT_STYLES[variant],
         SIZE_STYLES[size],
         className,

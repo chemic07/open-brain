@@ -65,19 +65,19 @@ export default function AiChatContent() {
   ];
 
   return (
-    <main className="min-h-screen bg-linear-to-b from-gray-50 to-white flex flex-col">
+    <main className="min-h-screen bg-linear-to-b from-gray-50 to-white flex dark-liner-to-b dark:from-transparent dark:to-transparent flex-col ">
       <div className="max-w-full mx-auto w-full flex flex-col h-screen">
-        <div className="p-6 pb-4 bg-gray-50 border-b border-black/20 sticky top-0 z-10">
-          <div className="flex items-center justify-between">
+        <div className="p-6 pb-4 bg-gray-50 dark:bg-transparent border-b border-black/20 sticky top-0 z-10">
+          <div className="flex items-centerbg justify-between">
             <div>
-              <h1 className="text-2xl  font-bold text-gray-800">
+              <h1 className="text-2xl dark:text-white  font-bold text-gray-800">
                 Chat with Your <span className="text-blue-500">Brain.</span>
               </h1>{" "}
             </div>
             {messages.length > 0 && (
               <button
                 onClick={handleClear}
-                className="p-2 text-gray-600 hover:text-red-600 rounded-lg hover:bg-black/5 transition-colors"
+                className="p-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white rounded-lg hover:bg-black/5 dark:hover:bg-white/10 transition-colors"
                 title="Clear conversation"
               >
                 <FiTrash2 size={20} />
@@ -90,21 +90,23 @@ export default function AiChatContent() {
           {/* welcome hai ji */}
           {messages.length === 0 && (
             <div className="text-center mt-12">
-              <h2 className="text-xl font-semibold text-gray-800 mb-2">
+              <h2 className="text-xl font-semibold text-gray-800 dark:text-white mb-2">
                 Hello, {user?.userName}! 👋
               </h2>
-              <p className="text-gray-600 mb-6">
+              <p className="text-gray-600 dark:text-white/70 mb-6">
                 Ask me anything about your saved content
               </p>
               {/* suggestion */}
               <div className="max-w-2xl mx-auto">
-                <p className="text-sm text-gray-500 mb-3">Try asking:</p>
+                <p className="text-sm text-gray-500 dark:text-white/50 mb-3">
+                  Try asking:
+                </p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                   {suggestedQuestions.map((question, index) => (
                     <button
                       key={index}
                       onClick={() => setInput(question)}
-                      className="p-3 bg-white border border-gray-200 rounded-lg hover:border-blue-500 hover:bg-blue-50 transition-all text-left text-sm text-gray-700 hover:text-blue-700"
+                      className="p-3 bg-white dark:bg-[#212121] border border-gray-200 dark:border-white/10 rounded-lg hover:border-blue-500 dark:hover:border-white/20 hover:bg-blue-50 dark:hover:bg-[#303030] transition-all text-left text-sm text-gray-700 dark:text-white/80 hover:text-blue-700 dark:hover:text-white/90"
                     >
                       {question}
                     </button>
@@ -198,7 +200,7 @@ export default function AiChatContent() {
         )}
 
         {/* input */}
-        <div className="p-6 pt-4 bg-white border-t border-black/25 sticky bottom-0">
+        <div className="p-6 pt-4 bg-white border-t  border-black/25 dark:bg-black sticky bottom-0">
           <form onSubmit={handleSubmit} className="flex gap-3">
             <InputField
               icon={<img src={magicIcon} alt="magic" className="h-5 w-5" />}
@@ -206,7 +208,7 @@ export default function AiChatContent() {
               onChange={(e) => setInput(e.target.value)}
               placeholder="Ask about your saved content..."
               disabled={loading}
-              variant="light"
+              variant={localStorage.theme}
             />
 
             <button

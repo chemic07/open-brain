@@ -55,16 +55,18 @@ export default function ProfileTab() {
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
+      <div className="bg-white dark:bg-[#181818] rounded-xl border border-gray-200 dark:border-white/10 p-6">
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-3">
-            <FiUser className="text-blue-600" size={24} />
-            <h2 className="text-xl font-semibold">Profile Information</h2>
+            <FiUser className="text-blue-600 dark:text-white/40" size={24} />
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white/90">
+              Profile Information
+            </h2>
           </div>
           {!isEditingProfile && (
             <button
               onClick={() => setIsEditingProfile(true)}
-              className="flex items-center gap-2 px-4 py-2 text-blue-600 hover:bg-blue-50 rounded-lg"
+              className="flex items-center gap-2 px-4 py-2 text-blue-600 dark:text-sky-600 hover:bg-blue-50 dark:hover:bg-white/10 rounded-lg"
             >
               <FiEdit2 size={16} />{" "}
               <span className="text-sm font-medium">Edit</span>
@@ -97,7 +99,7 @@ export default function ProfileTab() {
               <Button
                 type="button"
                 text="Cancel"
-                variant="secondary"
+                variant="glass"
                 onClick={() => setIsEditingProfile(false)}
                 headIcon={<FiX size={16} />}
                 className="flex-1"
@@ -112,22 +114,32 @@ export default function ProfileTab() {
           </form>
         ) : (
           <div className="space-y-4">
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <label className="text-sm text-gray-600">Username</label>
-              <p className="font-medium">{user?.userName}</p>
+            <div className="px-4 py-2 md:py-4 bg-gray-50 dark:bg-white/5 rounded-lg">
+              <label className="text-sm text-gray-600 dark:text-white/35">
+                Username
+              </label>
+              <p className="font-medium text-gray-900 dark:text-white/90">
+                {user?.userName}
+              </p>
             </div>
-            <div className="p-4 bg-gray-50 rounded-lg">
-              <label className="text-sm text-gray-600">Email</label>
-              <p className="font-medium">{user?.email}</p>
+            <div className=" px-4 py-2 md:py-4 bg-gray-50 dark:bg-white/5 rounded-lg">
+              <label className="text-sm text-gray-600 dark:text-white/35">
+                Email
+              </label>
+              <p className="font-medium text-gray-900 dark:text-white/90">
+                {user?.email}
+              </p>
             </div>
           </div>
         )}
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 p-6">
+      <div className="bg-white dark:bg-[#181818] rounded-xl border border-gray-200 dark:border-white/10 p-6">
         <div className="flex items-center gap-3 mb-6">
-          <FiLock className="text-blue-600" size={24} />
-          <h2 className="text-xl font-semibold">Change Password</h2>
+          <FiLock className="text-blue-600 dark:text-white/40" size={24} />
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white/90">
+            Change Password
+          </h2>
         </div>
         <form onSubmit={handlePasswordChange} className="space-y-4">
           <InputField
@@ -138,6 +150,7 @@ export default function ProfileTab() {
               setPasswordData({ ...passwordData, oldPassword: e.target.value })
             }
             variant="light"
+            placeholder="e.g. Old Password"
           />
           <InputField
             label="New Password"
@@ -147,6 +160,7 @@ export default function ProfileTab() {
               setPasswordData({ ...passwordData, newPassword: e.target.value })
             }
             variant="light"
+            placeholder="e.g. New Password"
           />
           <Button
             type="submit"

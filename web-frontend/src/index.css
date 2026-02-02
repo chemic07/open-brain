@@ -16,6 +16,14 @@
   --font-heading: "Satoshi", "ui-sans-serif", "system-ui";
 }
 
+.dark {
+  --color-app-bg: #070911; /* blue-900 */
+  --color-app-surface: #121212; /* black-100 */
+  --color-app-border: #3a3a3a; /* gray-100 */
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
 html {
   scroll-behavior: smooth;
 }
