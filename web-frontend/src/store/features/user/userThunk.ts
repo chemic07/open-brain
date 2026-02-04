@@ -15,7 +15,7 @@ export const fetchUserProfile = createAsyncThunk<
   { rejectValue: string }
 >("user/fetchProfile", async (_, { rejectWithValue }) => {
   try {
-    const res = await api.get<UserProfile>("/auth/me");
+    const res = await api.get<UserProfile>("/user/profile");
     return res.data;
   } catch (err) {
     if (axios.isAxiosError(err)) {

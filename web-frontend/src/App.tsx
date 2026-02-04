@@ -7,13 +7,15 @@ import DashboardRoot from "./pages/DashboardRoot";
 import DashboardOverview from "./pages/DashboardOverview";
 import ErrorPage from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
-import { useAppDispatch } from "./hooks/redux";
+import { useAppDispatch, useAppSelector } from "./hooks/redux";
 import { useEffect } from "react";
 import { loadUser } from "./store/features/auth";
+import { fetchUserProfile } from "./store/features/user/userThunk";
 import { getToken } from "./utils/LocalStorage";
 import SuccessPage from "./pages/SuccessPage";
 import CancelPage from "./pages/CancelPage";
 import UpgradePage from "./pages/UpgradePage";
+import LoadingAnimation from "./components/ui/LoadingAnimation";
 
 const router = createBrowserRouter([
   {
@@ -55,13 +57,26 @@ const router = createBrowserRouter([
 
 function App() {
   const dispatch = useAppDispatch();
+  const { userProfile, loading } = useAppSelector((state) => state.user);
+  const token = getToken();
 
   useEffect(() => {
-    const token = getToken();
     if (token) {
+      // Load auth user data
       dispatch(loadUser());
+      // Fetch full user profile
+      if (!userProfile) {
+        dispatch(fetchUserProfile());
+      }
     }
-  }, [dispatch]);
+  }, [dispatch, token, userProfile]);
+
+  // Show loading screen while fetching initial data
+  // Only show loading if we have a token but no user data yet
+  if (token && loading && !userProfile) {
+    return <LoadingAnimation />;
+  }
+
   return (
     <div>
       <Toaster position="top-center" />

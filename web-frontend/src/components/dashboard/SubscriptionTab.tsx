@@ -17,9 +17,9 @@ import { showToast } from "../../utils/toast";
 export default function SubscriptionTab() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { user } = useAppSelector((state) => state.auth);
+  const user = useAppSelector((state) => state.user.userProfile);
   const [cancelLoading, setCancelLoading] = useState(false);
-
+  console.log("user" + user);
   const plan = user?.plan || "FREE";
   const maxTokens = getMaxTokens(plan);
   const remaining = user?.tokens.totalRemaining || 0;

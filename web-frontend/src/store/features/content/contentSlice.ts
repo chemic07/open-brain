@@ -5,6 +5,7 @@ import {
   addContent,
   deleteContent,
   searchContent,
+  fetchContentByType,
 } from "./contentThunks";
 
 const initialState: ContentState = {
@@ -75,6 +76,19 @@ const contentSlice = createSlice({
       .addCase(searchContent.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Failed to search content";
+      })
+
+      .addCase(fetchContentByType.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchContentByType.fulfilled, (state, action) => {
+        state.loading = false;
+        state.contents = action.payload;
+      })
+      .addCase(fetchContentByType.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Failed to fetch content by type";
       })
 
       // Delete content

@@ -14,6 +14,8 @@ import {
   FiUsers,
   FiSettings,
   FiLogOut,
+  FiPenTool,
+  FiCodepen,
 } from "react-icons/fi";
 import { BottomItem } from "./ui/BottomSideBarItem";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
@@ -207,7 +209,7 @@ const mainItems = [
   { id: "dashboard", label: "Dashboard", icon: FiHome },
   { id: "tweets", label: "Tweets", icon: FiTwitter },
   { id: "videos", label: "Videos", icon: FiVideo },
-  { id: "links", label: "Links", icon: FiLink },
+  { id: "notes", label: "Notes", icon: FiCodepen },
   { id: "articles", label: "Articles", icon: FiFileText },
 ];
 

@@ -22,7 +22,7 @@ const chatSlice = createSlice({
       state.messages.push({
         role: "user",
         content: action.payload,
-        timestamp: new Date(),
+        timestamp: new Date().toISOString(),
       });
     },
     clearChatError: (state) => {
@@ -40,7 +40,7 @@ const chatSlice = createSlice({
         state.messages.push({
           role: "assistant",
           content: action.payload.message,
-          timestamp: new Date(),
+          timestamp: new Date().toISOString(),
         });
         state.sources = action.payload.sources;
       })

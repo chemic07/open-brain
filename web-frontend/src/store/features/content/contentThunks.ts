@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import type { Content, AddContentPayload } from "./contentTypes";
 import api from "../../../services/api";
 import axios from "axios";
-import { data } from "react-router-dom";
 
 // all content
 export const fetchAllContent = createAsyncThunk<
@@ -84,5 +83,23 @@ export const deleteContent = createAsyncThunk<
       );
     }
     return rejectWithValue("Failed to delete content");
+  }
+});
+
+export const fetchContentByType = createAsyncThunk<
+  Content[],
+  string,
+  { rejectValue: string }
+>("content/fetchByType", async (type, { rejectWithValue }) => {
+  try {
+    const res = await api.get<Content[]>(`/content/type/${type}`);
+    return res.data;
+  } catch (err) {
+    if (axios.isAxiosError(err)) {
+      return rejectWithValue(
+        err.response?.data?.error || "Failed to fetch content by type",
+      );
+    }
+    return rejectWithValue("Failed to fetch content by type");
   }
 });

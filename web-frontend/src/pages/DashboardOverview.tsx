@@ -5,36 +5,35 @@ import DashboardContent from "../components/dashboard/DashboardContent";
 import AiSearchContent from "../components/dashboard/AiSearchContent";
 import AiChatContent from "../components/dashboard/AiChatContent";
 import SettingsContent from "../components/dashboard/SettingsContent";
-import { useSearchParams } from "react-router-dom";
 import SimpleSearchContent from "../components/dashboard/SimpleSearchContent";
+import ByTypeContent from "../components/dashboard/ByTypeContent";
+import { useSearchParams } from "react-router-dom";
 
 export default function DashboardOverview() {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  // const [activeTab, setActiveTab] = useState("dashboard");
   const [searchParams, setSearchParams] = useSearchParams();
 
   const activeTab = searchParams.get("tab") || "dashboard";
 
   const setActiveTab = (tabId: string) => {
     setSearchParams({ tab: tabId });
-
-    // if (window.innerWidth < 768) {
-    //   setIsSidebarOpen(false);
-    // }
   };
+
   // this decides what to show in the content
   const renderContent = () => {
     switch (activeTab) {
       case "dashboard":
         return <DashboardContent />;
       case "tweets":
-        return <PlaceholderView title="Twitter Links" />;
+        return <ByTypeContent type="tweet" title="Tweets" />;
       case "videos":
-        return <PlaceholderView title="Video Collection" />;
-      case "links":
-        return <PlaceholderView title="General Links" />;
+        return <ByTypeContent type="video" title="Videos" />;
+      case "notes":
+        return <PlaceholderView title="Notes" />;
       case "articles":
-        return <PlaceholderView title="Saved Articles" />;
+        return <ByTypeContent type="article" title="Articles" />;
+      case "images":
+        return <ByTypeContent type="image" title="Images" />;
       case "aiSearch":
         return <AiSearchContent />;
       case "aiChat":
@@ -42,16 +41,16 @@ export default function DashboardOverview() {
       case "shared":
         return <PlaceholderView title="Shared brain" />;
       case "settings":
-        return <SettingsContent></SettingsContent>;
+        return <SettingsContent />;
       case "search":
-        return <SimpleSearchContent></SimpleSearchContent>;
+        return <SimpleSearchContent />;
       default:
         return <DashboardContent />;
     }
   };
 
   return (
-    <div className="h-screen flex bg-linear-to-b from-gray-50 to-white dark:bg-linear-to-b dark:from-[#212121]  dark:to-black overflow-hidden">
+    <div className="h-screen flex bg-linear-to-b from-gray-50 to-white dark:bg-linear-to-b dark:from-[#212121] dark:to-black overflow-hidden">
       <SideBar
         isOpen={isSidebarOpen}
         setIsOpen={setIsSidebarOpen}

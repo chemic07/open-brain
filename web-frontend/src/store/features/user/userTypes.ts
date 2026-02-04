@@ -1,3 +1,5 @@
+import type { Token } from "../auth";
+
 export type Plan = "Free" | "Plus" | "Pro";
 
 export interface UserChangePasswordPayload {
@@ -35,6 +37,8 @@ export interface UserProfile {
   password?: string;
   email: string;
   plan?: Plan;
+  tokens: Token;
+  isSubscribed: boolean;
   createdAt: string;
   updatedAt: string;
 }
