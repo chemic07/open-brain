@@ -3,6 +3,7 @@ import {
   addContentService,
   deleteContentService,
   getAllContentService,
+  getContentByTypeService,
   searchContentByWordService,
 } from "../services/content.services";
 import type { ContentInput } from "../validation/content.schema";
@@ -52,6 +53,27 @@ export async function searchContentByWord(
 
     const results = await searchContentByWordService(req.userId!, query);
     return res.status(200).json(results);
+  } catch (error) {
+    next(error);
+  }
+}
+
+export async function getContentByType(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const userId = req.userId!;
+    const type = req.params.type as string;
+
+    if (!type) {
+      return res.status(400).json({ message: "Type parameter is required" });
+    }
+
+    const contents = await getContentByTypeService(userId, type);
+
+    return res.status(200).json(contents);
   } catch (error) {
     next(error);
   }

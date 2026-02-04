@@ -84,6 +84,20 @@ export async function addContentService(data: ContentInput, userId: string) {
 
 //#endregion
 
+export async function getContentByTypeService(userId: string, type: string) {
+  try {
+    const results = await Content.find({ userId, type })
+      .populate("link")
+      .populate("tags")
+      .sort({ createdAt: -1 });
+
+    return results;
+  } catch (error) {
+    console.error("Get content by type error:", error);
+    throw new AppError("Failed to fetch content by type", 500);
+  }
+}
+
 //#region searchContentByword
 
 export async function searchContentByWordService(

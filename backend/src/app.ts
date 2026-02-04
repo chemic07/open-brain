@@ -10,7 +10,13 @@ import paymentRouter from "./routes/payment.routes";
 import { handleWebhook } from "./controller/payment.controller";
 
 const app = express();
-app.use(cors());
+app.use(
+  cors({
+    origin: "*", // For development, this allows your phone to connect
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  }),
+);
 app.post(
   "/api/v1/payment/webhook",
   express.raw({ type: "application/json" }),

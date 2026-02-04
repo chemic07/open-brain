@@ -15,4 +15,6 @@ contentRouter.post("/", authMiddleware, validate(ContentSchema), addContent);
 contentRouter.get("/", authMiddleware, getAllContent);
 contentRouter.delete("/:id", authMiddleware, deleteContentById);
 contentRouter.get("/search", authMiddleware, searchContentByWord);
+contentRouter.get("/type/:type", authMiddleware, getContentByType);
+//get content by type
 export default contentRouter;
