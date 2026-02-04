@@ -7,6 +7,18 @@ import { ShareLink } from "../models/share_link.model";
 import mongoose from "mongoose";
 import type { updateUserProfileInput } from "../validation/user.schema";
 
+//#region  getUserProfile
+export async function getUserProfileService(userId: string) {
+  const user = await UserModel.findById(userId).select("-password");
+
+  if (!user) {
+    throw new AppError("User not found", 404);
+  }
+
+  return user;
+}
+//#endregion
+
 //#region  changepass
 export async function changePasswordServices(
   userId: string,

@@ -1,10 +1,31 @@
 import type { NextFunction, Request, Response } from "express";
 import {
   changePasswordServices,
+  getUserProfileService,
   getUserStatsService,
   updateUserProfileServices,
 } from "../services/user.services";
 import { deleteContentService } from "../services/content.services";
+
+export async function getUserProfile(
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) {
+  try {
+    const userId = req.userId;
+
+    if (!userId) {
+      return res.status(401).json({ error: "UNAUTHORIZED" });
+    }
+
+    const user = await getUserProfileService(userId);
+    console.log(user);
+    return res.status(200).json(user);
+  } catch (error) {
+    next(error);
+  }
+}
 
 export async function getUserStats(
   req: Request,

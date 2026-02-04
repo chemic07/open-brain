@@ -8,11 +8,14 @@ import authMiddleware from "../middleware/auth.middleware";
 import {
   changePassword,
   deleteAccount,
+  getUserProfile,
   getUserStats,
   updateUserProfile,
 } from "../controller/user.controller";
 
 const userRouter = Router();
+
+userRouter.get("/user/profile", authMiddleware, getUserProfile);
 
 //update user profile
 userRouter.patch(

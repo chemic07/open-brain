@@ -5,6 +5,7 @@ import {
   getAllContent,
   deleteContentById,
   searchContentByWord,
+  getContentByType,
 } from "../controller/content.controller";
 import { validate } from "../middleware/validate.middleware";
 import { ContentSchema } from "../validation/content.schema";

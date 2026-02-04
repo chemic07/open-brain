@@ -13,7 +13,7 @@ const app = express();
 app.use(
   cors({
     origin: "*", // For development, this allows your phone to connect
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
     credentials: true,
   }),
 );
