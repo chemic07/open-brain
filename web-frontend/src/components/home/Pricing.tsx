@@ -1,7 +1,35 @@
 import { easeOut, motion, type Variants } from "framer-motion";
 import PricingCard from "../ui/PricingCard";
+import { useAppSelector } from "../../hooks/redux";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import api from "../../services/api";
 
 export default function Pricing() {
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
+  const [loading, setLoading] = useState<string | null>(null);
+
+  const handlePlanClick = async (plan: "PLUS" | "PRO") => {
+    if (!isAuthenticated) {
+      navigate("/auth/signin");
+      return;
+    }
+
+    try {
+      setLoading(plan);
+      const res = await api.post("/payment/create-checkout", {
+        plan,
+      });
+      window.location.href = res.data.url;
+    } catch (err) {
+      console.error("Checkout error", err);
+      alert("Failed to start checkout");
+    } finally {
+      setLoading(null);
+    }
+  };
+
   const containerVariants: Variants = {
     hidden: {},
     visible: {
@@ -35,7 +63,7 @@ export default function Pricing() {
       className="relative bg-[#05070A] py-24 px-6 md:px-20 overflow-hidden"
     >
       <div className="relative z-10 max-w-7xl mx-auto">
-        {/* Radial background */}
+        {/* radial background*/}
         <div
           className="
             pointer-events-none absolute left-80 top-15 h-75 w-150
@@ -75,6 +103,7 @@ export default function Pricing() {
           viewport={{ once: true, amount: 0.3 }}
           variants={containerVariants}
         >
+          {/* Free */}
           <motion.div variants={cardVariants}>
             <PricingCard
               title="Free"
@@ -86,11 +115,13 @@ export default function Pricing() {
                 "Manual tagging",
                 "Private collections",
                 "Basic search",
-                "Limitied AI  semantic search",
+                "Limited AI semantic search",
               ]}
+              onAction={() => navigate("/auth/signin")}
             />
           </motion.div>
 
+          {/* Plus */}
           <motion.div variants={cardVariants}>
             <PricingCard
               highlighted
@@ -99,15 +130,18 @@ export default function Pricing() {
               subtitle="For power users"
               features={[
                 "Unlimited links",
-                "5x more AI-powered semantic search",
+                "5x AI-powered semantic search",
                 "Auto-generated tags & summaries",
-                "Chat with your content (AI assistant)",
+                "Chat with your content",
                 "Share collections publicly",
                 "Priority processing",
               ]}
+              onAction={() => handlePlanClick("PLUS")}
+              isLoading={loading === "PLUS"}
             />
           </motion.div>
 
+          {/* Pro */}
           <motion.div variants={cardVariants}>
             <PricingCard
               title="Pro"
@@ -115,12 +149,14 @@ export default function Pricing() {
               subtitle="For teams & professionals"
               features={[
                 "Everything in Plus",
-                "Chat 10x with your content (AI assistant)",
-                "Team workspaces (up to 5 members)",
+                "10x AI chat",
+                "Team workspaces",
                 "Collaborative collections",
                 "Custom integrations",
                 "Priority support",
               ]}
+              onAction={() => handlePlanClick("PRO")}
+              isLoading={loading === "PRO"}
             />
           </motion.div>
         </motion.div>

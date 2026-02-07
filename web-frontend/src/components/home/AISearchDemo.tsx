@@ -3,11 +3,12 @@ import { FiStar, FiSearch, FiArrowRight } from "react-icons/fi";
 
 export default function AISearchDemo() {
   return (
-    <section className="bg-[#05070A] py-24 px-6 md:px-20 overflow-hidden">
+    <div className="bg-[#05070A] py-24 px-6 md:px-20 overflow-hidden">
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
         {/* left */}
 
         <div className="relative group">
+          {/* glow */}
           <div
             className="
           pointer-events-none absolute -translate-15 left-50 top-0 h-90 w-150
@@ -17,7 +18,6 @@ export default function AISearchDemo() {
         "
           />
           <div className="absolute -inset-1  bg-blue-500 rounded-3xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200" />
-
           <div className="relative bg-[#0D1117] rounded-2xl border border-white/10 backdrop-blur-xl p-6 shadow-2xl overflow-hidden">
             <div className="flex flex-col gap-5">
               {/* AI Query */}
@@ -91,6 +91,6 @@ export default function AISearchDemo() {
           </ul>
         </motion.div>
       </div>
-    </section>
+    </div>
   );
 }

@@ -1,10 +1,14 @@
-import { FiPlay, FiArrowDownRight } from "react-icons/fi";
+import { FiPlay, FiArrowDownRight, FiArrowRight } from "react-icons/fi";
 import Button from "../ui/Button";
 import { motion, useScroll, useTransform } from "framer-motion";
 import dashboardImg from "../../assets/images/thumbnail/dashboard.png";
+import { useAppSelector } from "../../hooks/redux";
+import { useNavigate } from "react-router-dom";
 
 export default function HeroSection() {
   const { scrollYProgress } = useScroll();
+  const navigate = useNavigate();
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   const textY = useTransform(scrollYProgress, [0, 0.3], [0, -80]);
   const textScale = useTransform(scrollYProgress, [0, 0.3], [1, 0.9]);
@@ -14,6 +18,13 @@ export default function HeroSection() {
   const dashScale = useTransform(scrollYProgress, [0, 0.3], [1, 1.2]);
   const dashOpacity = useTransform(scrollYProgress, [0, 0.5], [0.9, 1]);
 
+  const handelButtonClick = () => {
+    if (isAuthenticated) {
+      navigate("/dashboard");
+    } else {
+      navigate("/auth/signin");
+    }
+  };
   return (
     <section
       id="home"
@@ -96,13 +107,15 @@ export default function HeroSection() {
             text="Save a Link"
             variant="primary"
             size="lg"
-            tailIcon={<FiArrowDownRight size={18} />}
+            tailIcon={<FiArrowRight size={18} />}
+            onClick={handelButtonClick}
           />
           <Button
             text="View My Brain"
             variant="glass"
             size="lg"
             headIcon={<FiPlay size={16} fill="currentColor" />}
+            onClick={handelButtonClick}
           />
         </div>
       </motion.div>
@@ -110,13 +123,13 @@ export default function HeroSection() {
       {/* dashboard */}
       <motion.div
         style={{ y: dashY, scale: dashScale, opacity: dashOpacity }}
-        className="relative z-20 mb-10 mt-16 w-full max-w-5xl rounded-2xl border border-white/10 bg-slate-900/50 p-2 shadow-2xl shadow-blue-500/10 backdrop-blur-xl"
+        className="relative z-20 mb-10 mt-16 w-full max-w-5xl rounded-xl md:rounded-2xl border border-white/10 bg-slate-900/50 p-2 shadow-2xl shadow-blue-500/10 backdrop-blur-xl"
       >
-        <div className="w-full rounded-xl bg-slate-950/50 border border-white/5 relative">
+        <div className="w-full rounded-md md:rounded-xl bg-slate-950/50 border border-white/5 relative">
           <img
             src={dashboardImg}
             alt="Dashboard Preview"
-            className="w-full h-full rounded-xl md:rounded-2xl object-contain"
+            className="w-full h-full rounded-md md:rounded-2xl object-contain"
           />
         </div>
       </motion.div>

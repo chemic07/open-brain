@@ -31,7 +31,7 @@ interface IButtonProps {
 
 const VARIANT_STYLES: Record<Variant, string> = {
   primary:
-    "bg-white text-slate-950 rounded-lg md:rounded-xl hover:bg-slate-100 shadow-lg shadow-white/5",
+    "bg-white text-black/80  rounded-full md:rounded-full hover:bg-slate-100 shadow-lg shadow-white/5",
 
   secondary:
     "flex items-center gap-1 md:gap-2 bg-blue-600 text-white rounded-lg md:rounded-xl text-sm font-semibold hover:bg-blue-700 shadow-lg shadow-blue-100/30 transition-all",
@@ -46,7 +46,7 @@ const VARIANT_STYLES: Record<Variant, string> = {
 const SIZE_STYLES: Record<Size, string> = {
   sm: "px-2 md:px-4 py-1  md:py-1.5 text-[12px] md:text-xs",
   md: "px-3 md:px-6 py-1.5 md:py-2.5 text-[12px] md:text-sm",
-  lg: "px-4 md:px-8 py-2 md:py-4 text-sm md:text-base",
+  lg: "px-4 md:px-8 py-2 md:py-4 text-[12px] md:text-base",
 };
 
 export default function Button({
