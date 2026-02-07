@@ -8,6 +8,9 @@ import InputField from "../components/ui/InputFiled";
 import { signupUser, clearError } from "../store/features/auth";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 
+const API_URL = import.meta.env.VITE_BACKEND_AUTH;
+console.log(API_URL);
+
 export default function SignUpPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -33,6 +36,15 @@ export default function SignUpPage() {
     if (signupUser.fulfilled.match(resultAction)) {
       navigate("/auth/signin");
     }
+  };
+
+  // OAuth handlers
+  const handleGoogleAuth = () => {
+    window.location.href = `${API_URL}/api/v1/auth/google`;
+  };
+
+  const handleTwitterAuth = () => {
+    window.location.href = `${API_URL}/api/v1/auth/twitter`;
   };
 
   useEffect(() => {
@@ -92,12 +104,16 @@ export default function SignUpPage() {
                 variant="authOutline"
                 width="full"
                 headIcon={<FaGoogle size={18} />}
+                onClick={handleGoogleAuth}
+                type="button"
               />
               <AuthButton
                 text="X"
                 variant="authOutline"
                 width="full"
                 headIcon={<FiTwitter size={18} />}
+                onClick={handleTwitterAuth}
+                type="button"
               />
             </div>
             <div className="flex items-center">

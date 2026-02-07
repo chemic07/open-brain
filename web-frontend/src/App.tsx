@@ -16,6 +16,7 @@ import SuccessPage from "./pages/SuccessPage";
 import CancelPage from "./pages/CancelPage";
 import UpgradePage from "./pages/UpgradePage";
 import LoadingAnimation from "./components/ui/LoadingAnimation";
+import GoogleAuthCallback from "./pages/GoogleAuthCallback";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,11 @@ const router = createBrowserRouter([
   {
     path: "/auth/signup",
     element: <SignUpPage />,
+  },
+
+  {
+    path: "/auth/google/callback",
+    element: <GoogleAuthCallback />,
   },
 
   {

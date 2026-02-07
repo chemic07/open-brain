@@ -1,9 +1,18 @@
 import { Navigate, Outlet } from "react-router-dom";
-import { useAppSelector } from "../hooks/redux";
+import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import LoadingAnimation from "../components/ui/LoadingAnimation";
+import { fetchUserProfile } from "../store/features/user";
+import { useEffect } from "react";
 
 export default function DashboardRoot() {
   const { isAuthenticated, loading } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  const userProfile = useAppSelector((state) => state.user);
+
+  useEffect(() => {
+    console.log("fetching user profile");
+    dispatch(fetchUserProfile());
+  }, [dispatch, !userProfile]);
 
   if (loading) {
     return <LoadingAnimation />;

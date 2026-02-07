@@ -9,6 +9,8 @@ import { loginUser, clearError } from "../store/features/auth";
 import { useAppDispatch, useAppSelector } from "../hooks/redux";
 import { showToast } from "../utils/toast";
 
+const API_URL = import.meta.env.VITE_BACKEND_AUTH;
+
 export default function SignInPage() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -31,6 +33,15 @@ export default function SignInPage() {
       });
       navigate("/dashboard");
     }
+  };
+
+  // OAuth handlers
+  const handleGoogleAuth = () => {
+    window.location.href = `${API_URL}/api/v1/auth/google`;
+  };
+
+  const handleTwitterAuth = () => {
+    window.location.href = `${API_URL}/api/v1/auth/twitter`;
   };
 
   useEffect(() => {
@@ -89,6 +100,7 @@ export default function SignInPage() {
                 variant="authOutline"
                 width="full"
                 headIcon={<FaGoogle size={18} />}
+                onClick={handleGoogleAuth}
               />
               <AuthButton
                 type="button"
@@ -96,6 +108,7 @@ export default function SignInPage() {
                 variant="authOutline"
                 width="full"
                 headIcon={<FiTwitter size={18} />}
+                onClick={handleTwitterAuth}
               />
             </div>
 

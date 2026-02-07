@@ -8,24 +8,34 @@ import userRouter from "./routes/user.routes";
 import aiRouter from "./routes/ai.routes";
 import paymentRouter from "./routes/payment.routes";
 import { handleWebhook } from "./controller/payment.controller";
-
+import passport from "passport";
+import oauthRouter from "./routes/oauth.routes";
+import "./config/passport";
 const app = express();
-app.use(
-  cors({
-    origin: "*", // For development, this allows your phone to connect
-    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-    credentials: true,
-  }),
-);
+
 app.post(
   "/api/v1/payment/webhook",
   express.raw({ type: "application/json" }),
   handleWebhook,
 );
+
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
+    credentials: true,
+  }),
+);
+
+// init passport
+app.use(passport.initialize());
+
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use(paymentRouter);
 app.use(authRouter);
+app.use("/api/v1/auth", oauthRouter);
 app.use("/api/v1/", userRouter);
 app.use("/api/v1/content", contentRouter);
 app.use(shareRouter);

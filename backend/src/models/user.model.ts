@@ -1,9 +1,15 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose, { Document, Schema } from "mongoose";
 import { PlanType } from "../types/user";
 
-interface UserDocument {
+export enum AuthProviderType {
+  LOCAL = "local",
+  GOOGLE = "google",
+  TWITTER = "twitter",
+}
+
+export interface UserDocument extends Document {
   userName: string;
-  password: string;
+  password?: string;
   email: string;
   plan: PlanType;
   tokens: {
@@ -12,13 +18,24 @@ interface UserDocument {
   };
   isSubscribed: boolean;
   stripeCustomerId?: string;
+
+  googleId?: string;
+  twitterId?: string;
+  profilePicture?: string;
+  authProvider: AuthProviderType;
   stripeSubscriptionId?: string; //stripe
 }
 
 const userSchema = new Schema<UserDocument>(
   {
     userName: { type: String, required: true, trim: true },
-    password: { type: String, required: true, select: false },
+    password: {
+      type: String,
+      required: function (this: UserDocument) {
+        return this.authProvider === "local";
+      },
+      select: false,
+    },
     email: {
       type: String,
       required: true,
@@ -48,6 +65,23 @@ const userSchema = new Schema<UserDocument>(
     stripeCustomerId: { type: String, unique: true, sparse: true },
     stripeSubscriptionId: {
       type: String,
+    },
+
+    googleId: {
+      type: String,
+      sparse: true,
+    },
+    twitterId: {
+      type: String,
+      sparse: true,
+    },
+    profilePicture: {
+      type: String,
+    },
+    authProvider: {
+      type: String,
+      enum: Object.values(AuthProviderType),
+      default: AuthProviderType.LOCAL,
     },
   },
   {

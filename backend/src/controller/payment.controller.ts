@@ -12,7 +12,7 @@ export async function createCheckoutSession(
     console.log(process.env.STRIPE_PLUS_PRICE_ID || "not found");
     console.log(process.env.STRIPE_PRO_PRICE_ID || "not found");
     const userId = req.userId!;
-    const { plan } = req.body; // plsu pro
+    const { plan } = req.body;
 
     if (!plan || !STRIPE_PLANS[plan as keyof typeof STRIPE_PLANS]) {
       return res.status(400).json({ error: "Invalid plan selected" });

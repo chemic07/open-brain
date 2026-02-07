@@ -123,7 +123,7 @@ export default function LinkCard({
       </a>
 
       <p className="text-gray-500 dark:text-white/50 text-sm leading-relaxed mb-6 grow">
-        {summary}
+        {summary.slice(0, 250) + "..."}
       </p>
 
       {/* tag*/}
@@ -131,7 +131,7 @@ export default function LinkCard({
         {tags.map((tag) => (
           <span
             key={tag._id + Math.random()}
-            className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-sky-100 dark:bg-white/10 text-gray-500 dark:text-white/35 rounded-lg group-hover:bg-blue-50 dark:group-hover:bg-white/20 group-hover:text-white/80  transition-colors"
+            className="text-[10px] font-bold uppercase tracking-widest px-3 py-1 bg-sky-100 dark:bg-white/10 text-gray-500 dark:text-white/35 rounded-lg group-hover:bg-blue-50 dark:group-hover:bg-white/20 group-hover:text-black/70 dark:group-hover:text-white transition-colors"
           >
             #{tag.name}
           </span>

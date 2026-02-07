@@ -103,7 +103,9 @@ export default function ByTypeContent({ type, title }: ByTypeContentProps) {
               <div className="flex items-center justify-center">
                 <Button
                   text={`Add First ${type.charAt(0).toUpperCase() + type.slice(1)}`}
-                  variant="primary"
+                  variant={
+                    localStorage.theme === "light" ? "secondary" : "primary"
+                  }
                   headIcon={<FiPlus size={18} />}
                   onClick={() => setShowAddDialog(true)}
                 />

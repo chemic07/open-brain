@@ -18,6 +18,9 @@
     "@google/generative-ai": "^0.24.1",
     "@huggingface/transformers": "^3.8.1",
     "@types/bull": "^4.10.4",
+    "@types/passport": "^1.0.17",
+    "@types/passport-google-oauth20": "^2.0.17",
+    "@types/passport-twitter": "^1.0.40",
     "axios": "^1.13.4",
     "bcrypt": "^6.0.0",
     "bullmq": "^5.67.2",
@@ -29,6 +32,9 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.1.5",
     "openai": "^6.16.0",
+    "passport": "^0.7.0",
+    "passport-google-oauth20": "^2.0.0",
+    "passport-twitter": "^1.0.4",
     "stripe": "^20.3.0",
     "zod": "^4.3.6"
   }

@@ -1,0 +1,50 @@
+{
+  "0": {
+    "link": {
+      "_id": "697dafefd4331a1e12813fbf",
+      "url": "https://en.wikipedia.org/wiki/Artificial_intelligence",
+      "title": "Artificial intelligence - Wikipedia",
+      "createdAt": "2026-01-31T07:31:59.431Z",
+      "updatedAt": "2026-01-31T07:32:11.377Z",
+      "__v": 0,
+      "description": "AI is a computer science field developing systems that mimic human intelligence for learning, reasoning, and problem-solving."
+    },
+    "type": "article",
+    "title": "dfsefdf",
+    "tags": [
+      {
+        "_id": "697db0dbad5b58d68aebd72e",
+        "name": "text",
+        "userId": "69783b71a9ae75f0fc7496a1",
+        "__v": 0
+      },
+      {
+        "_id": "697db0dbad5b58d68aebd731",
+        "name": "meta",
+        "userId": "69783b71a9ae75f0fc7496a1",
+        "__v": 0
+      },
+      {
+        "_id": "697db0dbad5b58d68aebd734",
+        "name": "google",
+        "userId": "69783b71a9ae75f0fc7496a1",
+        "__v": 0
+      },
+      {
+        "_id": "697db0dbad5b58d68aebd737",
+        "name": "skype",
+        "userId": "69783b71a9ae75f0fc7496a1",
+        "__v": 0
+      }
+    ],
+    "userId": "69783b71a9ae75f0fc7496a1",
+    "_id": "697db0dbad5b58d68aebd739",
+    "createdAt": "2026-01-31T07:35:55.501Z",
+    "updatedAt": "2026-01-31T07:35:55.501Z",
+    "__v": 0
+  }
+}
+
+// 212121
+
+// dark:bg-[#303030]

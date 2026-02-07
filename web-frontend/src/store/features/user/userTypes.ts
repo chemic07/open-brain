@@ -33,8 +33,10 @@ export interface UserStats {
 
 export interface UserProfile {
   _id: string;
-  name: string;
+  userName: string;
   password?: string;
+  profilePicture?: string;
+  authProvider: string;
   email: string;
   plan?: Plan;
   tokens: Token;
