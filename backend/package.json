@@ -11,6 +11,9 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/mongoose": "^5.11.97"
   },
+  "scripts": {
+    "run": "bun run index.ts && bun run worker/index.ts"
+  },
   "peerDependencies": {
     "typescript": "^5"
   },

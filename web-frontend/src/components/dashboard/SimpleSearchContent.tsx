@@ -38,7 +38,7 @@ export default function SimpleSearchContent() {
 
       <div className="grid gap-4">
         {contents.length > 0
-          ? contents.map((item, index) => {
+          ? contents.map((item) => {
               let currContent = item;
               return (
                 <LinkCard

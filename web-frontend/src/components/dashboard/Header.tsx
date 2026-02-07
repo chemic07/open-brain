@@ -16,6 +16,7 @@ export default function Header({ setIsOpen }: IHeaderProps) {
   const dispatch = useAppDispatch();
   const [isShareModalOpen, setIsShareModalOpen] = useState(false);
   const { shareLink, loading } = useAppSelector((state) => state.share);
+  console.log(searchParams);
 
   // Theme State
   const [isDarkMode, setIsDarkMode] = useState(() => {

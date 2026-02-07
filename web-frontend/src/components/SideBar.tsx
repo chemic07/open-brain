@@ -8,13 +8,11 @@ import {
   FiHome,
   FiTwitter,
   FiVideo,
-  FiLink,
   FiFileText,
   FiBox,
   FiUsers,
   FiSettings,
   FiLogOut,
-  FiPenTool,
   FiCodepen,
 } from "react-icons/fi";
 import { BottomItem } from "./ui/BottomSideBarItem";
