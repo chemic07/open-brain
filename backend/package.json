@@ -12,7 +12,8 @@
     "@types/mongoose": "^5.11.97"
   },
   "scripts": {
-    "run": "bun run index.ts && bun run worker/index.ts"
+    "server": "bun run src/index.ts",
+    "worker": "bun run worker/index.ts"
   },
   "peerDependencies": {
     "typescript": "^5"
