@@ -24,7 +24,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./dockerfile.worker
+          file: ./backend/dockerfile.worker
           push: true
           tags: rajlodhi09/backend-worker:${{ github.sha }}
 
