@@ -21,13 +21,22 @@ export default function Footer() {
             </p>
 
             <div className="flex items-center gap-4 text-gray-400">
-              <a href="#" className="hover:text-white transition">
+              <a
+                href="https://github.com/chemic07/open-brain"
+                className="hover:text-white transition"
+              >
                 <FiGithub />
               </a>
-              <a href="#" className="hover:text-white transition">
+              <a
+                href="https://x.com/chemic077"
+                className="hover:text-white transition"
+              >
                 <FiTwitter />
               </a>
-              <a href="#" className="hover:text-white transition">
+              <a
+                href="https://www.linkedin.com/in/raj-lodhi-a1a632248/"
+                className="hover:text-white transition"
+              >
                 <FiLinkedin />
               </a>
             </div>

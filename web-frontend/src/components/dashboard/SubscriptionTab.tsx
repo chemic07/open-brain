@@ -89,7 +89,7 @@ export default function SubscriptionTab() {
               className={`h-full transition-all duration-1000 ease-out rounded-full ${
                 isLowTokens
                   ? "bg-orange-500 dark:bg-orange-400"
-                  : "bg-blue-600 dark:bg-blue-400"
+                  : "bg-blue-600 dark:bg-sky-600"
               }`}
               style={{ width: `${tokenPercentage}%` }}
             />

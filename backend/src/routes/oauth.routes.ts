@@ -24,7 +24,14 @@ oauthRouter.get(
 );
 
 // Twitter OAuth
-oauthRouter.get("/twitter", passport.authenticate("twitter"));
+oauthRouter.get(
+  "/twitter",
+  (req: Request, res: Response, next: NextFunction) => {
+    console.log("twitter");
+    passport.authenticate("twitter")(req, res, next);
+    console.log("twitter done");
+  },
+);
 
 oauthRouter.get(
   "/twitter/callback",

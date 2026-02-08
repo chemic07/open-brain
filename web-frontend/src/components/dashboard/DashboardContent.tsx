@@ -33,7 +33,7 @@ export default function DashboardContent() {
             </p>
           </div>
 
-          <div className="flex items-center just gap-15 md:gap-2">
+          <div className="flex items-center just gap-10 md:gap-2">
             <div className="flex items-center gap-3 bg-white dark:bg-[#303030] px-4 py-2 rounded-lg md:rounded-xl border border-gray-200 dark:border-white/10 shadow-sm transition-colors">
               <FiCalendar className="text-gray-400 dark:text-gray-500" />
               <span className="text-sm font-medium text-gray-700 dark:text-gray-200">

@@ -58,14 +58,17 @@ passport.use(
       includeEmail: true,
     },
     async (_token, _tokenSecret, profile, done) => {
+      console.log(process.env.TWITTER_CALLBACK_URL!);
       try {
+        console.log("profile", profile);
         let user = await UserModel.findOne({ twitterId: profile.id });
-
         const email = profile.emails?.[0]?.value;
 
+        console.log("email", email);
         if (!user && email) {
           user = await UserModel.findOne({ email });
 
+          console.log("user", user);
           if (user) {
             user.twitterId = profile.id;
             user.authProvider = AuthProviderType.TWITTER;

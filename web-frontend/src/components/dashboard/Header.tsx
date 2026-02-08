@@ -61,7 +61,7 @@ export default function Header({ setIsOpen }: IHeaderProps) {
           className="md:hidden mr-1 md:mr-3 p-2 text-gray-600 dark:text-gray-400 hover:bg-sky-100 dark:hover:bg-gray-800 rounded-lg transition-colors"
           aria-label="Open Menu"
         >
-          <FiMenu size={20} />
+          <FiMenu size={24} />
         </button>
 
         <SearachBar

@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from "../../hooks/redux";
 import { useEffect, useState } from "react";
 import { searchContent } from "../../store/features/content/contentThunks";
 import LinkCard from "../ui/LinkCard";
+import SimpleLinkCard from "../ui/SimpleLinkCard";
 
 export default function SimpleSearchContent() {
   const [searchParams] = useSearchParams();
@@ -41,14 +42,12 @@ export default function SimpleSearchContent() {
           ? contents.map((item) => {
               let currContent = item;
               return (
-                <LinkCard
-                  type={currContent.type}
+                <SimpleLinkCard
                   id={currContent._id}
-                  createdAt={currContent.createdAt}
                   title={currContent.title}
                   tags={currContent.tags}
-                  url={currContent.title}
-                  summary={currContent.title}
+                  url={currContent.link.url}
+                  summary={currContent.link.description!}
                   key={currContent._id}
                 />
               );

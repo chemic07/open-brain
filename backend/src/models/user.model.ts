@@ -10,7 +10,7 @@ export enum AuthProviderType {
 export interface UserDocument extends Document {
   userName: string;
   password?: string;
-  email: string;
+  email?: string;
   plan: PlanType;
   tokens: {
     totalRemaining: number;
@@ -38,7 +38,6 @@ const userSchema = new Schema<UserDocument>(
     },
     email: {
       type: String,
-      required: true,
       unique: true,
       lowercase: true,
       trim: true,

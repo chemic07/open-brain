@@ -1,4 +1,5 @@
 import express from "express";
+import session from "express-session";
 import authRouter from "./routes/auth.routes";
 import errorMiddlerware from "./middleware/error.middlerware";
 import contentRouter from "./routes/content.routes";
@@ -20,6 +21,17 @@ app.post(
 );
 
 app.use(
+  session({
+    secret: process.env.SESSION_SECRET!,
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  }),
+);
+
+app.use(
   cors({
     origin: "*",
     methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
@@ -29,6 +41,7 @@ app.use(
 
 // init passport
 app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

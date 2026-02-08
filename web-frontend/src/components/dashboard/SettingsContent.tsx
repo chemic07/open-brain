@@ -35,7 +35,7 @@ export default function SettingsContent() {
             {tab}
             {/* line active */}
             {activeTab === tab && (
-              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:text-sky-600 rounded-full" />
+              <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-blue-600 dark:bg-sky-600 dark:text-sky-600 rounded-full" />
             )}
           </button>
         ))}

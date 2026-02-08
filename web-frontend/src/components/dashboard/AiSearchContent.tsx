@@ -82,33 +82,73 @@ export default function AiSearchContent() {
               hasSearched ? "max-w-2xl mt-6" : "max-w-3xl mt-12",
             )}
           >
-            <div className="relative">
-              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">
-                <FiSearch size={20} />
+            <div className="relative w-full">
+              {/* Search Icon */}
+              <div className="absolute left-3 md:left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-500">
+                <FiSearch size={18} className="md:size-5" />
               </div>
+
+              {/* Input */}
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search your saved content using natural language..."
-                className="w-full pl-12 pr-24 py-4 text-sm md:text-lg border-2 border-gray-200 dark:border-white/10 rounded-xl md:rounded-2xl focus:ring-blue-500 dark:focus:ring-blue-400/10 focus:border-blue-500 dark:focus:border-sky-400/50 focus:outline-none bg-white dark:bg-[#181818] dark:text-white shadow-sm hover:shadow-lg transition-shadow"
+                placeholder="Search your saved content..."
+                className="
+      w-full
+      pl-10 md:pl-12
+      pr-29 md:pr-40
+      py-3 md:py-4
+      text-sm md:text-lg
+      border-2 border-gray-200 dark:border-white/10
+      rounded-xl md:rounded-2xl
+      focus:ring-blue-500 dark:focus:ring-blue-400/10
+      focus:border-blue-500 dark:focus:border-sky-400/50
+      focus:outline-none
+      bg-white dark:bg-[#181818]
+      dark:text-white
+      shadow-sm hover:shadow-md
+      transition-shadow
+    "
               />
-              <div className="absolute right-2 top-1/2 -translate-y-1/2 flex gap-2">
+
+              {/* Buttons */}
+              <div className="absolute right-2 top-1/2 -translate-y-1/2 flex items-center gap-1.5 md:gap-2">
                 {searchQuery && (
                   <button
                     type="button"
                     onClick={handleClear}
-                    className="px-4 py-2 text-sm text-gray-600 dark:text-white/50 hover:text-gray-800 dark:hover:text-white/80 font-medium"
+                    className="
+          px-2.5 py-1.5
+          md:px-4 md:py-2
+          text-xs md:text-sm
+          text-gray-600 dark:text-white/50
+          hover:text-gray-800 dark:hover:text-white/80
+          font-medium
+          whitespace-nowrap
+        "
                   >
                     Clear
                   </button>
                 )}
+
                 <button
                   type="submit"
                   disabled={loading || !searchQuery.trim()}
-                  className="px-3 py-1 md:px-6 md:py-2.5 bg-blue-600 dark:bg-blue-500 text-white rounded-xl hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-colors font-medium"
+                  className=" px-3 py-1.5
+        md:px-6 md:py-2.5
+        text-xs md:text-sm
+        bg-blue-600 dark:bg-blue-500
+        text-white
+        rounded-lg md:rounded-xl
+        hover:bg-blue-700 dark:hover:bg-blue-600
+        disabled:opacity-50 disabled:cursor-not-allowed
+        transition-colors
+        font-medium
+        whitespace-nowrap
+      "
                 >
-                  {loading ? "Searching..." : "Search"}
+                  {loading ? "..." : "Search"}
                 </button>
               </div>
             </div>
