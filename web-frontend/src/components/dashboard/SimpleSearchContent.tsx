@@ -2,7 +2,6 @@ import { useSearchParams } from "react-router-dom";
 import { useAppSelector, useAppDispatch } from "../../hooks/redux";
 import { useEffect, useState } from "react";
 import { searchContent } from "../../store/features/content/contentThunks";
-import LinkCard from "../ui/LinkCard";
 import SimpleLinkCard from "../ui/SimpleLinkCard";
 
 export default function SimpleSearchContent() {
